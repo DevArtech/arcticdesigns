@@ -1,5 +1,5 @@
 # Arctic Designs
-Website for Arctic Designs - EComm 3D Printing Site\\
+Website for Arctic Designs - EComm 3D Printing Site
 ### Built With
 ![Static Badge](https://img.shields.io/badge/React-%2361DAFB?style=flat-square&logo=react&logoColor=%23000000)
 ![Static Badge](https://img.shields.io/badge/Next.js-%23000000?style=flat-square&logo=nextdotjs&logoColor=%23FFFFFF)
