@@ -1,3 +1,5 @@
+"use client";
+
 // LoginForm.js
 import React, { useState } from 'react';
 
@@ -5,7 +7,7 @@ function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-const handleSubmit = async (event: React.FormEvent) => {
+const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       const response = await fetch("http://localhost:8080/api/v1/submit", {
