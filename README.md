@@ -9,3 +9,5 @@ Website for Arctic Designs - EComm 3D Printing Site\
 ![Static Badge](https://img.shields.io/badge/Python-%233776AB?style=flat-square&logo=python&logoColor=%23FFFFFF)
 ![Static Badge](https://img.shields.io/badge/Flask-%23000000?style=flat-square&logo=flask&logoColor=%23FFFFFF)
 ![Static Badge](https://img.shields.io/badge/MongoDB-%2347A248?style=flat-square&logo=mongodb&logoColor=%23FFFFFF)
+![Static Badge](https://img.shields.io/badge/Amazon%20AWS-%23232F3E?style=flat-square&logo=amazonaws)
+
