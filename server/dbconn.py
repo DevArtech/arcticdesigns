@@ -1,9 +1,12 @@
 from pymongo import MongoClient
 from typing import Dict, List
+import os
+from dotenv import load_dotenv
 
 class DBConn:
     def __init__(self):
-        self.client = MongoClient("mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000")
+        load_dotenv()
+        self.client = MongoClient(os.getenv("ATLAS_URI"))
 
     def get_db(self, db_name: str):
         return self.client[db_name]

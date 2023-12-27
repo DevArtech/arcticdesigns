@@ -16,7 +16,7 @@ def return_home():
 @app.route("/api/v1/submit", methods=["POST"])
 def log_user_data():
     user_data = request.json
-    dbconn.delete_many("account", "user")
+    # dbconn.delete_many("account", "user")
     response = dbconn.insert_doc("account", "user", {"username" : user_data["username"], "password" : user_data["password"]})
     if response.acknowledged:
         logs = []
