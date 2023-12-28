@@ -5,10 +5,12 @@ function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const api = process.env.API_ENDPOINT;
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch("https://jzckr2qgvc.execute-api.us-east-2.amazonaws.com/ArcticDesignsAPI/api/v1/submit", {
+      const response = await fetch(api + "/api/v1/submit", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
