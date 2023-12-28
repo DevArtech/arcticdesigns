@@ -43,7 +43,7 @@ jobs:
         cd server/.dependencies
         zip -r ../deployment.zip .
         cd ../
-        zip -r deployment.zip . -x .dependencies
+        zip -r deployment.zip * -x .dependencies
 
     - name: Deploy to AWS Lambda
       run: |
