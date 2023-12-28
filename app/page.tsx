@@ -8,7 +8,7 @@ function page() {
   return (
     <div className="App">
       <h1>Login Form</h1>
-      <LoginForm />
+      <LoginForm/>
     </div>
   )
 }

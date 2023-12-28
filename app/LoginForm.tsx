@@ -5,12 +5,14 @@ function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const api = process.env.API_ENDPOINT;
+  function url(endpoint: string) {
+    return `${process.env.API_ENDPOINT}${endpoint}`;
+  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch(api + "/api/v1/submit", {
+      const response = await fetch(url("/api/v1/submit"), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
