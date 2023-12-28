@@ -1,5 +1,5 @@
 Flask
 Pymongo
 python-dotenv
-awsgi
+aws-wsgi
 Flask-Cors
