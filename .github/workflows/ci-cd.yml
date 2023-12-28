@@ -41,16 +41,18 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-2
 
-    - name: Package Lambda function
+    - name: Package Lambda deployment
       run: |
         # Package your Lambda function, e.g., zip for Python
-        cd server
-        zip -r function.zip .
+        cd server/.dependencies
+        zip -r ../deployment.zip 
+        cd ../
+        zip -r deployment.zip . -x .dependencies
 
     - name: Deploy to AWS Lambda
       run: |
         # Deploy the function to AWS Lambda
         cd server
-        aws lambda update-function-code --function-name ArcticDesignsLambda --zip-file fileb://function.zip
+        aws lambda update-function-code --function-name ArcticDesignsLambda --zip-file fileb://deployment.zip
 
     
