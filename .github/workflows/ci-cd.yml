@@ -50,4 +50,5 @@ jobs:
     - name: Deploy to AWS Lambda
       run: |
         # Deploy the function to AWS Lambda
+        cd server
         aws lambda update-function-code --function-name ArcticDesignsLambda --zip-file fileb://function.zip
