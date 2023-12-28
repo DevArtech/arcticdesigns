@@ -5,11 +5,17 @@ const dotenv = require('dotenv');
 
 let env = {};
 
-// Check if .env exists
+// Check if .env file exists
 if (fs.existsSync('.env')) {
+  // Load environment variables from .env file
   env = dotenv.parse(fs.readFileSync('.env'));
 } else {
-  env = process.env;
+  // Copy process.env excluding NODE_ENV
+  for (let key in process.env) {
+    if (key !== 'NODE_ENV') {
+      env[key] = process.env[key];
+    }
+  }
 }
 
 const nextConfig = {
