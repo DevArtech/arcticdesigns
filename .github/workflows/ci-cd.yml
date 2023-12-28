@@ -44,6 +44,7 @@ jobs:
     - name: Package Lambda function
       run: |
         # Package your Lambda function, e.g., zip for Python
+        cd server
         zip -r function.zip .
 
     - name: Deploy to AWS Lambda
