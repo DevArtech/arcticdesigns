@@ -1,13 +1,10 @@
 // LoginForm.js
 import React, { useState } from 'react';
+import { url } from './config/utils';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  function url(endpoint: string) {
-    return `${process.env.API_ENDPOINT}${endpoint}`;
-  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
