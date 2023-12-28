@@ -28,10 +28,6 @@ jobs:
         -w=/lambda-build \
         lambci/lambda:build-python3.8 \
         pip install -r requirements.txt --target .dependencies
-    - name: List contents of .dependencies
-      run: |
-        cd server
-        ls -l .dependencies
         
     # Deployment
     - name: Set up AWS CLI
@@ -45,7 +41,7 @@ jobs:
       run: |
         # Package your Lambda function, e.g., zip for Python
         cd server/.dependencies
-        zip -r ../deployment.zip 
+        zip -r ../deployment.zip .
         cd ../
         zip -r deployment.zip . -x .dependencies
 
