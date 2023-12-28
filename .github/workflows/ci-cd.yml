@@ -7,11 +7,13 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build_deploy:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+
+    # Building
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -30,15 +32,8 @@ jobs:
       run: |
         cd server
         ls -l .dependencies
-
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-    - uses: actions/checkout@v2
-
+        
+    # Deployment
     - name: Set up AWS CLI
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -57,3 +52,5 @@ jobs:
         # Deploy the function to AWS Lambda
         cd server
         aws lambda update-function-code --function-name ArcticDesignsLambda --zip-file fileb://function.zip
+
+    
