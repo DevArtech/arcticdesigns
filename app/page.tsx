@@ -7,7 +7,7 @@ function page() {
 
   return (
     <div className="App">
-      <h1>Login Form</h1>
+      <h1>Data from Database</h1>
       <LoginForm/>
     </div>
   )

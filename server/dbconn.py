@@ -21,7 +21,7 @@ class DBConn:
         return self.client.list_database_names()
     
     def get_all_docs(self, db_name: str, collection_name: str):
-        return self.client[db_name][collection_name].find()
+        return self.client[db_name][collection_name].find({})
     
     def get_doc(self, db_name: str, collection_name: str, doc_id: str):
         return self.client[db_name][collection_name].find_one({'_id': doc_id})
