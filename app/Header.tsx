@@ -6,6 +6,33 @@ import { url } from './config/utils';
 function Header() {
 
   const [searchBarPlaceholder, setSearchBarPlaceholder] = useState("");
+  const [isMenuClosed, setIsMenuClosed] = useState(() => {
+    if (window.innerWidth >= 700) {
+      return false;
+    } else {
+      return true;
+    }
+  
+  });
+
+  useEffect(() => {
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 700) {
+        setIsMenuClosed(false);
+      } else {
+        setIsMenuClosed(true);
+      }
+  });
+  })
+
+  const toggleMenu = () => {
+    if (window.innerWidth >= 700) {
+      setIsMenuClosed(false);
+    } else {
+      setIsMenuClosed(!isMenuClosed);
+    }
+  };
+
 
   function toggleSearchBar() {
     const button = document.getElementById('toggleSearchButton') as HTMLButtonElement;
@@ -70,14 +97,14 @@ function Header() {
       </div>
 
       {/* Hamburger menu */}
-      <div className={styles.hamburgerMenu} id="hamburgerMenu">
+      <div className={`${styles.hamburgerMenu} ${isMenuClosed ? '' : styles.active}`} onClick={toggleMenu}>
         <span></span>
         <span></span>
         <span></span>
       </div>
 
       {/* Right side menu */}
-      <div className={styles.rightHeader}>
+      <div className={`${styles.rightHeader} ${isMenuClosed ? styles.hideMenu : ''}`}>
         <div className={styles.headerOptions}>
           <a className={styles.headerLink} href="/products">Produts</a>
           <a className={styles.headerLink} href="/blog">Blog</a>
