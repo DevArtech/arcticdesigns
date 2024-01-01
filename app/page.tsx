@@ -12,7 +12,7 @@ function Page() {
   return (
     <div className="App">
       <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap');
+        @import url(&apos;https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap&apos;);
       </style>
       <Header/>
     </div>
