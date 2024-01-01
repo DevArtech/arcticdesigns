@@ -6,14 +6,18 @@ import { url } from './config/utils';
 function Header() {
 
   const [searchBarPlaceholder, setSearchBarPlaceholder] = useState("");
-  const [isMenuClosed, setIsMenuClosed] = useState(() => {
-    if (window.innerWidth >= 700) {
-      return false;
-    } else {
-      return true;
-    }
-  
-  });
+  const [isMenuClosed, setIsMenuClosed] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(false);
+
+  useEffect(() => {
+    if(!pageLoaded) {
+      if (window.innerWidth > 700) {
+        setIsMenuClosed(false);
+      } else {
+        setIsMenuClosed(true);
+      }
+      setPageLoaded(true);
+    }})
 
   useEffect(() => {
     window.addEventListener('resize', function() {
@@ -22,8 +26,7 @@ function Header() {
       } else {
         setIsMenuClosed(true);
       }
-  });
-  })
+  });})
 
   const toggleMenu = () => {
     if (window.innerWidth >= 700) {
