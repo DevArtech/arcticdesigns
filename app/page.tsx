@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import Header from './Header';
 import './globals.css'
 
-function page() {
+function Page() {
   useEffect(() => {
     document.title = 'Arctic Designs';
   }, []);
@@ -16,4 +16,4 @@ function page() {
   )
 }
 
-export default page;
+export default Page;
