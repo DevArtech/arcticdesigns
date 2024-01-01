@@ -6,9 +6,6 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  options: {
-    safelist: ['@import'],
-  },
   theme: {
     extend: {
       backgroundImage: {

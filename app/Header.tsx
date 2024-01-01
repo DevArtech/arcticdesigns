@@ -1,4 +1,5 @@
 // Header.js
+import './header.module.css'
 import styles from './header.module.css';
 import React, { useEffect } from 'react';
 
