@@ -1,14 +1,14 @@
 "use client";
 
 import React from 'react';
-import LoginForm from './LoginForm';
+import Header from './Header';
+import './globals.css'
 
 function page() {
 
   return (
     <div className="App">
-      <h1>Data from Database</h1>
-      <LoginForm/>
+      <Header/>
     </div>
   )
 }

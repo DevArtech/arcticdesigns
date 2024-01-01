@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+
+.header {
+    background-color: #F7F4F3;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #48B8FE;
+    width: 100%;
+}
+
+.headerLogo {
+    margin-left: 4rem;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Fira Sans', sans-serif;
+    color: #102542;
+    text-align: center;
+}
+
+.headerLogo:hover {
+    cursor: pointer;
+    color: #48B8FE;
+    transition: all 0.1s ease-in-out;
+}
+
+.rightHeader {
+    margin-right: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.headerOptions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.headerLink {
+    color: #102542;
+}
+
+.headerLink:hover {
+    cursor: pointer;
+    color: #48B8FE;
+    transition: all 0.1s ease-in-out;
+}
+
+.searchIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: #102542;
+}
+
+.searchIcon:hover {
+    cursor: pointer;
+    fill: #48B8FE;
+    transition: all 0.1s ease-in-out;
+}
+
+.signInButton {
+    background-color: #48B8FE;
+    color: #F7F4F3;
+    border: none;
+    border-radius: 1.25rem;
+    height: 2.5rem;
+    width: 8rem;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Fira Sans', sans-serif;
+}
+
+.signInButton:hover {
+    cursor: pointer;
+    background-color: #102542;
+    transition: all 0.1s ease-in-out;
+}
+
+.hamburgerMenu {
+    display: none; /* Hidden by default */
+    cursor: pointer;
+    margin-right: 1rem;
+  }
+  
+  .hamburgerMenu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px;
+    background-color: #333;
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 700px) {
+    .hamburgerMenu {
+      display: block;
+    }
+  
+    .rightHeader {
+      display: none; /* Hide the menu options initially */
+    }
+
+    .headerLogo {
+        margin-left: 1rem;
+    }
+  }
