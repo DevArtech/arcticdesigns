@@ -8,6 +8,10 @@ function Header() {
   const [searchBarPlaceholder, setSearchBarPlaceholder] = useState("");
 
   function toggleSearchBar() {
+    const button = document.getElementById('toggleSearchButton') as HTMLButtonElement;
+    if(button) {
+      button.disabled = true;
+    }
     const searchBar = document.getElementById("searchInputField");
     if(searchBar) {
       if(searchBar.style.width === "15rem") {
@@ -24,6 +28,11 @@ function Header() {
         searchBar.focus();
       }
     }
+    setTimeout(() => {
+      if(button) {
+        button.disabled = false;
+      }
+    }, 100);
   }
 
   useEffect(() => {
@@ -76,7 +85,7 @@ function Header() {
         </div>
         <div className={styles.searchBar}>
         <input id="searchInputField" type="text" placeholder={searchBarPlaceholder}></input>
-          <button onClick={toggleSearchBar}>
+          <button id="toggleSearchButton" onClick={toggleSearchBar}>
             <svg className={styles.searchIcon} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xmlSpace="preserve">
               <defs>
               </defs>
@@ -87,7 +96,7 @@ function Header() {
           </button>
         </div>
         <button className={styles.signInButton}>
-          Sign In
+          Sign Up
         </button>
       </div>
     </div>
