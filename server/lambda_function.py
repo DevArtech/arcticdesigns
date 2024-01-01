@@ -9,6 +9,14 @@ app = Flask(__name__)
 dbconn = DBConn()
 CORS(app)
 
+@app.route("/api/products/total-count", methods=["GET"])
+def get_product_count():
+    collections = dbconn.get_all_collections("products")
+    product_count = 0
+    for collection in collections:
+        product_count += sum(1 for _ in dbconn.get_all_docs("products", collection))
+    return jsonify(product_count)
+
 @app.route("/api/products/<collection>/<quantity>", methods=["GET"])
 def get_amount_from_collection(collection: str, quantity: int):
     cursor = dbconn.get_all_docs("products", collection)

@@ -1,8 +1,11 @@
 // Header.js
 import styles from './header.module.css';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { url } from './config/utils';
 
 function Header() {
+
+  const [searchBarPlaceholder, setSearchBarPlaceholder] = useState("");
 
   function toggleSearchBar() {
     const searchBar = document.getElementById("searchInputField");
@@ -26,7 +29,18 @@ function Header() {
   useEffect(() => {
     const searchBar = document.getElementById("searchInputField");
     const handleBlur = () => toggleSearchBar();
+    async function fetchData() {
+      const response = await fetch(url("/api/products/total-count"), {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const productCount = await response.json();
+      setSearchBarPlaceholder(`Search from ${productCount} products`)
+    }
 
+    fetchData();
     if (searchBar) {
       searchBar.addEventListener('blur', handleBlur);
     }
@@ -61,7 +75,7 @@ function Header() {
           <a className={styles.headerLink} href="/contact">Contact</a>
         </div>
         <div className={styles.searchBar}>
-        <input id="searchInputField" type="text"></input>
+        <input id="searchInputField" type="text" placeholder={searchBarPlaceholder}></input>
           <button onClick={toggleSearchBar}>
             <svg className={styles.searchIcon} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xmlSpace="preserve">
               <defs>
