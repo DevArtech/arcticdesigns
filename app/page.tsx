@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import Header from './Header';
 import './globals.css'
+import './header.module.css'
 
 function Page() {
   useEffect(() => {

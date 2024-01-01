@@ -1,5 +1,4 @@
 // Header.js
-import './header.module.css'
 import styles from './header.module.css';
 import React, { useEffect } from 'react';
 
@@ -9,6 +8,7 @@ function Header() {
     const searchBar = document.getElementById("searchInputField");
     if(searchBar) {
       if(searchBar.style.width === "15rem") {
+        searchBar.blur();
         searchBar.style.width = "0";
         searchBar.style.opacity = "0";
         searchBar.style.paddingLeft = "0";
