@@ -2,7 +2,7 @@ import styles from './primarymodal.module.css';
 import React, { useEffect, useState } from 'react';
 import { url } from './config/utils';
 import ProductCard from './ProductCard'
-import { init } from 'next/dist/compiled/webpack/webpack';
+import Image from 'next/image';
 
 function PrimaryModal() {
 
@@ -27,28 +27,34 @@ function PrimaryModal() {
     }, []);
 
     useEffect(() => {
+        function generateProductCards() {
+            async function fetchData() {
+                const response = await fetch(url("/api/products/get-random-products"), {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
+                });
+                const products = await response.json();
+                const mappedProductCards = products.map((product: {id: string, name: string, images: Array<string>, price: number, rating: number, redirect: string}) => {
+                    return <ProductCard 
+                            key={product.id}
+                            name={product.name} 
+                            image={product.images[0]} 
+                            price={product.price} 
+                            rating={product.rating} 
+                            redirect={"/"}/>
+                });
+                setProductCards(productCards.length <= 0 ? mappedProductCards : productCards);
+            }
+            fetchData();
+        }
+
         if(!initialLoad) {
             generateProductCards();
             setInitialLoad(true);
         }
-    }, [initialLoad]);
-
-    function generateProductCards() {
-        async function fetchData() {
-            const response = await fetch(url("/api/products/get-random-products"), {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            });
-            const products = await response.json();
-            const mappedProductCards = products.map((product: {name: string, images: Array<string>, price: number, rating: number, redirect: string}) => {
-                return <ProductCard name={product.name} image={product.images[0]} price={product.price} rating={product.rating} redirect={"/"}/>
-            });
-            setProductCards(productCards.length <= 0 ? mappedProductCards : productCards);
-        }
-        fetchData();
-    }
+    }, [initialLoad, productCards]);
 
     return (
         <div className={styles.primaryModal}>

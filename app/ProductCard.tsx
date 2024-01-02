@@ -1,6 +1,6 @@
 import styles from './productcard.module.css';
 import React, { useEffect, useState } from 'react';
-import { url } from './config/utils';
+import Image from 'next/image';
 
 
 function ProductCard(props: {name: string, image: string, price: number, rating: number, redirect: string}) {
@@ -11,7 +11,7 @@ function ProductCard(props: {name: string, image: string, price: number, rating:
             {[...Array(5)].map(() => {   
                 i++;     
                 return (       
-                    <div>  
+                    <div key={i - 2.25}>  
                         <span style={{left: `${i}rem`}} className={styles.starUnfilled}>&#9733;</span>    
                         {    
                             i - 2.25 <= rating ? <span style={{left: `${i}rem`}} className={styles.star}>&#9733;</span> : ""

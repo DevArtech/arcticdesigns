@@ -27,6 +27,7 @@ def get_random_products():
         for product in cursor:
             # Append all keys except _id
             products.append({key: product[key] for key in product if key != "_id"})
+            products[-1]["id"] = str(product["_id"])
     random.shuffle(products)
     return jsonify(products)
 

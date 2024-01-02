@@ -17,7 +17,7 @@ function Header() {
         setIsMenuClosed(true);
       }
       setPageLoaded(true);
-    }})
+    }}, [pageLoaded])
 
   useEffect(() => {
     window.addEventListener('resize', function() {
