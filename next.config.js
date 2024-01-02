@@ -19,7 +19,7 @@ if (fs.existsSync('.env')) {
 }
 
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   env: env
 };
 

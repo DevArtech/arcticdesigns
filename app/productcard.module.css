@@ -1,0 +1,33 @@
+.productCard {
+    width: 20%;
+    height: 20rem;
+    color: #F7F4F3;
+    font-family: 'Fira Sans', sans-serif;
+    text-align: center;
+    padding: 0.75rem;
+}
+
+.productCard:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.productImage {
+    border-radius: 1rem;
+}
+
+.starRating {
+    position: relative;
+    gap: 0.25rem;
+}
+
+.star {
+    position: absolute;
+    color: #48B8FE;
+}
+
+.starUnfilled {
+    position: absolute;
+    color: #E5FCFF;
+}

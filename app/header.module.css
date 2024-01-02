@@ -1,11 +1,14 @@
 .header {
-    background-color: #F7F4F3;
+    z-index: 999;
+    background-color: #F7F4F380;
     padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #48B8FE;
     width: 100%;
+    position: fixed;
+    backdrop-filter: blur(16px);
 }
 
 .headerLogo {

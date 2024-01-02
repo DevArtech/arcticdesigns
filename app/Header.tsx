@@ -109,7 +109,7 @@ function Header() {
       {/* Right side menu */}
       <div className={`${styles.rightHeader} ${isMenuClosed ? styles.hideMenu : ''}`}>
         <div className={styles.headerOptions}>
-          <a className={styles.headerLink} href="/products">Produts</a>
+          <a className={styles.headerLink} href="/products">Products</a>
           <a className={styles.headerLink} href="/blog">Blog</a>
           <a className={styles.headerLink} href="/contact">Contact</a>
         </div>

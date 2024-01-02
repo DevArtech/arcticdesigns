@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
 import awsgi
+import random
 
 # App Instance
 app = Flask(__name__)
@@ -16,6 +17,18 @@ def get_product_count():
     for collection in collections:
         product_count += sum(1 for _ in dbconn.get_all_docs("products", collection))
     return jsonify(product_count)
+
+@app.route("/api/products/get-random-products", methods=["GET"])
+def get_random_products():
+    collections = dbconn.get_all_collections("products")
+    products = []
+    for collection in collections:
+        cursor = dbconn.get_all_docs("products", collection)
+        for product in cursor:
+            # Append all keys except _id
+            products.append({key: product[key] for key in product if key != "_id"})
+    random.shuffle(products)
+    return jsonify(products)
 
 @app.route("/api/products/<collection>/<quantity>", methods=["GET"])
 def get_amount_from_collection(collection: str, quantity: int):

@@ -1,0 +1,127 @@
+.primaryModal {
+    padding-top: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.innerElements {
+    position: relative;
+    width: 80vw;
+    height: 100%;
+    z-index: 0;
+}
+
+.modalBackground {
+    object-fit: cover;
+    object-position: top left;
+    border-radius: 2rem;
+}
+
+.modalElements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #F7F4F3;
+    font-family: 'Fira Sans', sans-serif;
+    width: 40%;
+    margin: 3rem 0 0 3.5rem;
+}
+
+.modalTag {
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 6rem;
+}
+
+.modalAddText {
+    font-size: 1.25rem;
+    font-weight: 400;
+    width: 70%;
+    line-height: 1.75rem;
+}
+
+.visitShopButton {
+    margin-top: 1rem;
+    width: 10rem;
+    display: flex;
+}
+
+.visitShopModalBorder {
+    padding: 1.1rem 6rem;
+    border-radius: 2rem;
+    border: 1px solid #E5FCFF;
+    mix-blend-mode: overlay;
+}
+
+.visitShopModalBorder:hover {
+    cursor: pointer;
+    background-color: #E5FCFF;
+    transition: all 0.1s ease-in-out;
+}
+
+.searchBar {
+    display: flex;
+    background-color: #F7F4F3;
+    padding: 0.5rem;
+    border-radius: 2rem;
+    width: 100%;
+}
+
+.searchIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: #48B8FE;
+    margin-left: 0.25rem;
+}
+
+.searchBar span {
+    display: block;
+    width: 2px;
+    height: 1.4rem;
+    margin-left: 0.5rem;
+    background-color: #ACB1BB;
+    border-radius: 1px;
+}
+
+.searchInputField {
+    margin-left: 0.5rem;
+    width: 90%;
+    background: none;
+    color: #102542;
+}
+
+.searchInputField:focus {
+    outline: none;
+}
+
+.searchButton {
+    background-color: #48B8FE;
+    color: #F7F4F3;
+    border: none;
+    border-radius: 1.25rem;
+    height: 2.5rem;
+    width: 8rem;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Fira Sans', sans-serif;
+}
+
+.searchButton:hover {
+    cursor: pointer;
+    background-color: #102542;
+    transition: all 0.1s ease-in-out;
+}
+
+.productCards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    position: absolute;
+    width: 80vw;
+    margin-left: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    height: 50vh;
+}
