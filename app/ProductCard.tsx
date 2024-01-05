@@ -2,8 +2,16 @@ import styles from './productcard.module.css';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
+interface ProductCardProps {
+    name: string;
+    image: string;
+    price: number;
+    rating: number;
+    redirect: string;
+};
 
-function ProductCard(props: {name: string, image: string, price: number, rating: number, redirect: string}) {
+
+function ProductCard(props: ProductCardProps) {
     const StarRating = (rating: number) => {
         let i = 2.25;
         return (
