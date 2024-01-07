@@ -45,6 +45,7 @@
     margin-top: 1rem;
     width: 10rem;
     display: flex;
+    z-index: 1;
 }
 
 .visit-shop-modal-border {
@@ -52,6 +53,7 @@
     border-radius: 2rem;
     border: 1px solid #E5FCFF;
     mix-blend-mode: overlay;
+    z-index: 1;
 }
 
 .visit-shop-modal-border:hover {
@@ -66,6 +68,7 @@
     padding: 0.5rem;
     border-radius: 2rem;
     width: 100%;
+    z-index: 1;
 }
 
 .search-icon {
@@ -105,6 +108,7 @@
     font-size: 16px;
     font-weight: bold;
     font-family: 'Fira Sans', sans-serif;
+    z-index: 1;
 }
 
 .search-button:hover {
@@ -116,12 +120,23 @@
 .product-cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    align-items: flex-end;
     position: absolute;
     width: 80vw;
     margin-left: 0;
     bottom: 0;
     left: 0;
     overflow: hidden;
-    height: 50vh;
+    height: 70vh;
+    padding: 1rem;
+    row-gap: 5rem;
+    z-index: 0;
+}
+
+.product-card-spacer {
+    margin: 0 0 4% 0;
+    padding: 0;
+    width: 1px;
+    height: 10rem;
+    background: linear-gradient(transparent, white, transparent);
 }

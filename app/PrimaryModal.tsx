@@ -36,16 +36,26 @@ function PrimaryModal() {
                   }
                 });
                 const products = await response.json();
-                const mappedProductCards = products.map((product: {id: string, name: string, images: Array<string>, price: number, rating: number, redirect: string}) => {
+                let i = 0;
+                let mappedProductCards = products.map((product: {id: string, name: string, images: Array<string>, price: number, rating: number, redirect: string}) => {
+                    i++;
                     return <ProductCard 
                             key={product.id}
                             name={product.name} 
                             image={product.images[0]} 
                             price={product.price} 
                             rating={product.rating} 
-                            redirect={"/"}/>
+                            redirect={"/"}
+                            largeCard={i == 5 ? true : false}/>
                 });
-                setProductCards(productCards.length <= 0 ? mappedProductCards : productCards);
+                let finalProductCards = [];
+                for(let j = 0; j < mappedProductCards.length; j++) {
+                    finalProductCards.push(mappedProductCards[j]);
+                    if(j < 3) {
+                        finalProductCards.push(<div key={j} className={styles["product-card-spacer"]}/>);
+                    }
+                }
+                setProductCards(productCards.length <= 0 ? finalProductCards : productCards);
             }
             fetchData();
         }
