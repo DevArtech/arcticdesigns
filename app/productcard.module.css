@@ -1,4 +1,4 @@
-.productCard {
+.product-card {
     width: 20%;
     height: 20rem;
     color: #F7F4F3;
@@ -7,17 +7,17 @@
     padding: 0.75rem;
 }
 
-.productCard:hover {
+.product-card:hover {
     cursor: pointer;
     transform: scale(1.05);
     transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.productImage {
+.product-image {
     border-radius: 1rem;
 }
 
-.starRating {
+.star-rating {
     position: relative;
     gap: 0.25rem;
 }
@@ -27,7 +27,7 @@
     color: #48B8FE;
 }
 
-.starUnfilled {
+.star-unfilled {
     position: absolute;
     color: #E5FCFF;
 }

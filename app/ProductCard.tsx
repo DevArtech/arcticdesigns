@@ -15,14 +15,14 @@ function ProductCard(props: ProductCardProps) {
     const StarRating = (rating: number) => {
         let i = 2.25;
         return (
-          <div className={styles.starRating}>
+          <div className={styles["star-rating"]}>
             {[...Array(5)].map(() => {   
                 i++;     
                 return (       
                     <div key={i - 2.25}>  
-                        <span style={{left: `${i}rem`}} className={styles.starUnfilled}>&#9733;</span>    
+                        <span style={{left: `${i}rem`}} className={styles["star-unfilled"]}>&#9733;</span>    
                         {    
-                            i - 2.25 <= rating ? <span style={{left: `${i}rem`}} className={styles.star}>&#9733;</span> : ""
+                            i - 2.25 <= rating ? <span style={{left: `${i}rem`}} className={styles["star"]}>&#9733;</span> : ""
                         }
                     </div>
                 );
@@ -32,8 +32,8 @@ function ProductCard(props: ProductCardProps) {
       };      
 
     return (
-    <div className={styles.productCard}>
-        <img src={props.image} alt={props.name} className={styles.productImage}/>
+    <div className={styles["product-card"]}>
+        <img src={props.image} alt={props.name} className={styles["product-image"]}/>
         <p style={{fontWeight : "bold"}}>{props.name}</p>
         <p>{`$${(props.price / 100).toFixed(2)}`}</p>
         <p>{StarRating(props.rating)}</p>

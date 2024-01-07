@@ -93,30 +93,30 @@ function Header() {
 
 
   return (
-    <div className={styles.header}>
+    <div className={styles["header"]}>
       {/* Left side menu */}
       <div>
-        <a className={styles.headerLogo} href="/">Arctic Designs</a>
+        <a className={styles["header-logo"]} href="/">Arctic Designs</a>
       </div>
 
       {/* Hamburger menu */}
-      <div className={`${styles.hamburgerMenu} ${isMenuClosed ? '' : styles.active}`} onClick={toggleMenu}>
+      <div className={`${styles["hamburger-menu"]} ${isMenuClosed ? '' : styles["active"]}`} onClick={toggleMenu}>
         <span></span>
         <span></span>
         <span></span>
       </div>
 
       {/* Right side menu */}
-      <div className={`${styles.rightHeader} ${isMenuClosed ? styles.hideMenu : ''}`}>
-        <div className={styles.headerOptions}>
-          <a className={styles.headerLink} href="/products">Products</a>
-          <a className={styles.headerLink} href="/blog">Blog</a>
-          <a className={styles.headerLink} href="/contact">Contact</a>
+      <div className={`${styles["right-header"]} ${isMenuClosed ? styles["hide-menu"] : ''}`}>
+        <div className={styles["header-options"]}>
+          <a className={styles["header-link"]} href="/products">Products</a>
+          <a className={styles["header-link"]} href="/blog">Blog</a>
+          <a className={styles["header-link"]} href="/contact">Contact</a>
         </div>
-        <div className={styles.searchBar}>
+        <div className={styles["search-bar"]}>
         <input id="searchInputField" type="text" placeholder={searchBarPlaceholder}></input>
           <button id="toggleSearchButton" onClick={toggleSearchBar}>
-            <svg className={styles.searchIcon} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xmlSpace="preserve">
+            <svg className={styles["search-icon"]} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xmlSpace="preserve">
               <defs>
               </defs>
               <g transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
@@ -125,7 +125,7 @@ function Header() {
             </svg>
           </button>
         </div>
-        <button className={styles.signInButton}>
+        <button className={styles["sign-in-button"]}>
           Sign Up
         </button>
       </div>
