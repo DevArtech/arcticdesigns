@@ -45,6 +45,7 @@ function PrimaryModal() {
                             image={product.images[0]} 
                             price={product.price} 
                             rating={product.rating} 
+                            colorOptions={["Black", "Red", "Yellow", "Blue", "White", "Gray"]}
                             redirect={"/"}
                             largeCard={i == 5 ? true : false}/>
                 });

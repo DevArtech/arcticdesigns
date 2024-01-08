@@ -120,6 +120,23 @@
     transition: all 0.1s ease-in-out;
 }
 
+.cart-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    stroke: #102542;
+    stroke-linecap: butt;
+    stroke-miterlimit: 10;
+    stroke-linejoin: miter;
+    stroke-width: 4;
+    fill: #102542;
+    transition: all 0.1s ease-in-out;
+}
+
+.cart:hover .cart-icon {
+    stroke: #48B8FE;
+    fill: #48B8FE;
+}
+
 .hamburger-menu {
     display: none; /* Hidden by default */
     cursor: pointer;
