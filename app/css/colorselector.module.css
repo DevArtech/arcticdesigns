@@ -32,7 +32,7 @@
     z-index: 10;
     border-radius: 6px;
     backdrop-filter: blur(16px);
-    width: 100%;
+    width: auto;
 }
 
 .dropdown-menu li {
@@ -41,6 +41,7 @@
     cursor: pointer;
     transition: all 0.1s ease-in-out;
     z-index: 10;
+    white-space: nowrap;
 }
 
 .dropdown-menu li:hover {

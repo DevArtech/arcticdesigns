@@ -151,7 +151,7 @@
     left: 0;
     overflow: hidden;
     padding: 1rem;
-    z-index: 0;
+    z-index: 2;
     row-gap: 5rem;
 }
 

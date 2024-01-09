@@ -52,7 +52,7 @@ const ColorSelector = (props: DropdownProps) => {
             {isOpen &&
                 <ul className={styles["dropdown-menu"]}>
                     {props.options.map((option, index) => (
-                        <li style={{display: "flex"}} onClick={() => handleOptionClick(option)} key={index}><div style={{backgroundImage : `url("./colors/${option.toLowerCase()}.png")`, backgroundSize: "cover"}} className={styles["color-preview"]}/>{option}</li>
+                        <li style={{display: "flex"}} onClick={() => handleOptionClick(option)} key={index}><div style={{backgroundImage : `url("./colors/${option.toLowerCase()}.png")`, backgroundSize: "cover", boxShadow : option.toLowerCase() == "glow" ? "0 0 5px 3px rgba(0, 123, 155, 1)" : ""}} className={styles["color-preview"]}/>{option}</li>
                     ))}
                 </ul>
             }
