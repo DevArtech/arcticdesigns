@@ -6,6 +6,7 @@
     text-align: center;
     padding: 0.75rem;
     bottom: 0;
+    pointer-events: all;
 }
 
 .product-card-large {
@@ -21,6 +22,7 @@
     margin: 0;
     backdrop-filter: blur(16px);
     margin-bottom: 0.5rem;
+    pointer-events: all;
 }
 
 .product-card-large > .star-rating {

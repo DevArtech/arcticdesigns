@@ -153,6 +153,7 @@
     padding: 1rem;
     z-index: 2;
     row-gap: 5rem;
+    pointer-events: none;
 }
 
 .product-card-spacer {
