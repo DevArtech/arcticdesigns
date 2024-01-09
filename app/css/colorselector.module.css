@@ -46,3 +46,11 @@
     color: #48B8FE;
     background-color: #F7F4F340;
 }
+
+.color-preview {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    margin-top: 0.35em;
+    margin-right: 0.5rem;
+}

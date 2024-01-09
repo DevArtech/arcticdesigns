@@ -1,0 +1,36 @@
+.product-added-modal {
+    position: absolute;
+    right: 13rem;
+    top: 3.5rem;
+    background-color: #F7F4F34A;
+    border: 1px solid #48B8FE;
+    width: 20rem;
+    height: 10rem;
+    border-radius: 6px;
+    backdrop-filter: blur(16px);
+    padding: 1rem;
+}
+
+.product-image {
+    width: 6rem;
+    height: auto;
+    border-radius: 6px;
+}
+
+.view-cart-button {
+    background-color: #48B8FE;
+    color: #F7F4F3;
+    border: none;
+    border-radius: 1.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Fira Sans', sans-serif;
+    margin-top: 0.25rem;
+}
+
+.view-cart-button:hover {
+    cursor: pointer;
+    background-color: #102542;
+    transition: all 0.1s ease-in-out;
+}

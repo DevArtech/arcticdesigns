@@ -1,4 +1,4 @@
-import styles from './productcard.module.css';
+import styles from './css/productcard.module.css';
 import React, { useEffect, useState } from 'react';
 import ColorSelector from './ColorSelector';
 
@@ -10,6 +10,7 @@ interface ProductCardProps {
     colorOptions: string[]
     redirect: string;
     largeCard: boolean;
+    popProductAdded(name: string, image: string): void;
 };
 
 
@@ -50,7 +51,7 @@ function ProductCard(props: ProductCardProps) {
         <div style={{display : "flex", marginTop: props.largeCard ? "0.25rem" : "2rem", width: "100%", justifyContent: "space-around"}}>
                 <ColorSelector
                     options={props.colorOptions}/>
-                <button className={styles["add-to-cart-button"]}>
+                <button onClick={() => props.popProductAdded(props.name, props.image)} className={styles["add-to-cart-button"]}>
                     <svg className={styles["add-to-cart-icon"]} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xmlSpace="preserve">
                         <defs/>
                         <g transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">

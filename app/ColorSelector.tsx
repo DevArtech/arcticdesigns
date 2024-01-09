@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './colorselector.module.css';
+import styles from './css/colorselector.module.css';
 import { useState, useRef, useEffect } from 'react';
 
 interface DropdownProps {
@@ -44,11 +44,15 @@ const ColorSelector = (props: DropdownProps) => {
 
     return (
         <div className={styles["color-selector"]}>
-            <button onClick={handleToggleClick} ref={toggleButtonRef} className={styles["dropdown-toggle"]}>{selectedColor}<div style={{position: "absolute", right: "0.35em", top: "0.15em"}}>⌄</div></button>
+            <button onClick={handleToggleClick} ref={toggleButtonRef} className={styles["dropdown-toggle"]}><div style={{backgroundImage : `url("./colors/${selectedColor.toLowerCase()}.png")`, backgroundSize: "cover"}} className={styles["color-preview"]}/>{selectedColor}
+            {
+                isOpen ? <div style={{position: "absolute", right: "0.35em", top: "0.55em"}}>⌃</div> : <div style={{position: "absolute", right: "0.35em", top: "0.15em"}}>⌄</div>
+            }
+            </button>
             {isOpen &&
                 <ul className={styles["dropdown-menu"]}>
                     {props.options.map((option, index) => (
-                        <li onClick={() => handleOptionClick(option)} key={index}>{option}</li>
+                        <li style={{display: "flex"}} onClick={() => handleOptionClick(option)} key={index}><div style={{backgroundImage : `url("./colors/${option.toLowerCase()}.png")`, backgroundSize: "cover"}} className={styles["color-preview"]}/>{option}</li>
                     ))}
                 </ul>
             }

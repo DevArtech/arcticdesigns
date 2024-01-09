@@ -1,10 +1,13 @@
-import styles from './primarymodal.module.css';
+import styles from './css/primarymodal.module.css';
 import React, { useEffect, useState } from 'react';
 import { url } from './config/utils';
 import ProductCard from './ProductCard'
-import Image from 'next/image';
 
-function PrimaryModal() {
+interface PrimaryModalProps {
+    popProductAdded(name: string, image: string): void;
+}
+
+function PrimaryModal(props: PrimaryModalProps) {
 
     const [searchBarPlaceholder, setSearchBarPlaceholder] = useState("");
     const [productCards, setProductCards] = useState<React.ReactNode[]>([]);
@@ -45,9 +48,10 @@ function PrimaryModal() {
                             image={product.images[0]} 
                             price={product.price} 
                             rating={product.rating} 
-                            colorOptions={["Black", "Red", "Yellow", "Blue", "White", "Gray"]}
+                            colorOptions={["Black", "Red", "Yellow", "Blue", "White", "Gray", "Marble"]}
                             redirect={"/"}
-                            largeCard={i == 5 ? true : false}/>
+                            largeCard={i == 5 ? true : false}
+                            popProductAdded={props.popProductAdded}/>
                 });
                 let finalProductCards = [];
                 for(let j = 0; j < mappedProductCards.length; j++) {

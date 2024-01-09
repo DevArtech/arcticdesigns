@@ -1,5 +1,5 @@
 // Header.js
-import styles from './header.module.css';
+import styles from './css/header.module.css';
 import React, { useEffect, useState } from 'react';
 import { url } from './config/utils';
 
@@ -35,7 +35,6 @@ function Header() {
       setIsMenuClosed(!isMenuClosed);
     }
   };
-
 
   function toggleSearchBar() {
     const button = document.getElementById('toggleSearchButton') as HTMLButtonElement;
@@ -134,6 +133,7 @@ function Header() {
                   <circle cx="74.59" cy="74.33" r="6.16" className={styles["cart-icon"]}/>
               </g>
           </svg>
+          <div id="cart"></div>
         </a>
         <button className={styles["sign-in-button"]}>
           Sign Up
