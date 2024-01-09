@@ -73,6 +73,27 @@
     z-index: 1;
 }
 
+.search-bar:hover {
+    cursor: pointer;
+    background-color: #48B8FE;
+    transition: all 0.1s ease-in-out;
+}
+
+.search-bar:hover > .search-icon {
+    fill: #102542;
+    transition: all 0.1s ease-in-out;
+}
+
+.search-bar:hover > span {
+    background-color: #102542;
+    transition: all 0.1s ease-in-out;
+}
+
+.search-bar:hover > .search-input-field::placeholder {
+    color: #102542;
+    transition: all 0.1s ease-in-out;
+}
+
 .search-icon {
     width: 1.25rem;
     height: 1.25rem;

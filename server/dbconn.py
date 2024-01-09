@@ -29,9 +29,13 @@ class DBConn:
     def insert_doc(self, db_name: str, collection_name: str, doc: Dict[any, any]):
         return self.client[db_name][collection_name].insert_one(doc)
     
-    def update_one(self, db_name: str, collection_name: str, doc_id: str, new_doc: str):
-        old_doc = self.get_doc(db_name, collection_name, doc_id)
-        return self.cleint[db_name][collection_name].update_one(old_doc, new_doc)
+    def update_one(self, db_name: str, collection_name: str, regex: str, new_doc: str):
+        """
+        Example:
+        regex = {"_id": document["_id"]}
+        new_doc = {"$set": {"name": "new_name"}}
+        """
+        return self.cleint[db_name][collection_name].update_one(regex, new_doc)
 
     def update_many(self, db_name: str, collection_name: str, regex: str, new_doc: str):
         return self.client[db_name][collection_name].update_many(regex, new_doc)
