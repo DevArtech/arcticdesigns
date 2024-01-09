@@ -40,7 +40,7 @@ function PrimaryModal(props: PrimaryModalProps) {
                 });
                 const products = await response.json();
                 let i = 0;
-                let mappedProductCards = products.map((product: {id: string, name: string, images: Array<string>, price: number, rating: number, redirect: string}) => {
+                let mappedProductCards = products.map((product: {id: string, name: string, images: string[], price: number, rating: number, redirect: string, colors: string[]}) => {
                     i++;
                     return <ProductCard 
                             key={product.id}
@@ -48,7 +48,7 @@ function PrimaryModal(props: PrimaryModalProps) {
                             image={product.images[0]} 
                             price={product.price} 
                             rating={product.rating} 
-                            colorOptions={["Black", "Red", "Yellow", "Blue", "White", "Gray", "Marble"]}
+                            colorOptions={product.colors}
                             redirect={"/"}
                             largeCard={i == 5 ? true : false}
                             popProductAdded={props.popProductAdded}/>
