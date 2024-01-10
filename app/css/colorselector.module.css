@@ -15,6 +15,18 @@
     width: 100%;
 }
 
+.dropdown-value {
+    width: fit-content;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dropdown-value:not(.large-card) {
+    max-width: 2.5rem;
+}
+
 .dropdown-toggle:hover {
     border: 1px solid #48B8FE;
     color: #48B8FE;

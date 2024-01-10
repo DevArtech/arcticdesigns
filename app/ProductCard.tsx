@@ -53,7 +53,8 @@ function ProductCard(props: ProductCardProps) {
         <div style={{display : "flex", marginTop: props.largeCard ? "0.25rem" : "2rem", width: "100%", justifyContent: "space-around"}}>
                 <ColorSelector
                     options={props.colorOptions}
-                    availableColors={props.availableColors}/>
+                    availableColors={props.availableColors}
+                    isLargeCard={props.largeCard}/>
                 <button onClick={() => props.popProductAdded(props.name, props.image)} className={styles["add-to-cart-button"]}>
                     <svg className={styles["add-to-cart-icon"]} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xmlSpace="preserve">
                         <defs/>
