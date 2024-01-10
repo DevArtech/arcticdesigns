@@ -2,6 +2,7 @@ from pymongo import MongoClient
 from typing import Dict, List
 import os
 from dotenv import load_dotenv
+from bson.objectid import ObjectId
 
 class DBConn:
     def __init__(self):
@@ -24,7 +25,7 @@ class DBConn:
         return self.client[db_name][collection_name].find({})
     
     def get_doc(self, db_name: str, collection_name: str, doc_id: str):
-        return self.client[db_name][collection_name].find_one({'_id': doc_id})
+        return self.client[db_name][collection_name].find_one({'_id': ObjectId(doc_id)})
     
     def insert_doc(self, db_name: str, collection_name: str, doc: Dict[any, any]):
         return self.client[db_name][collection_name].insert_one(doc)

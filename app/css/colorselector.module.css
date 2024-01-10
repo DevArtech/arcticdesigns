@@ -38,13 +38,17 @@
 .dropdown-menu li {
     text-align: left;
     padding: 5px 10px;
-    cursor: pointer;
     transition: all 0.1s ease-in-out;
     z-index: 10;
     white-space: nowrap;
 }
 
-.dropdown-menu li:hover {
+.dropdown-menu li.unavailable {
+    background-color: #ACB1BB;
+    cursor: default;
+}
+
+.dropdown-menu li:not(.unavailable):hover {
     color: #48B8FE;
     background-color: #F7F4F340;
 }

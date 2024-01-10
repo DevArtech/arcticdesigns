@@ -2,6 +2,7 @@ import styles from './css/primarymodal.module.css';
 import React, { useEffect, useState } from 'react';
 import { url } from './config/utils';
 import ProductCard from './ProductCard'
+import AvailableColor from './utils/availablecolors';
 
 interface PrimaryModalProps {
     popProductAdded(name: string, image: string): void;
@@ -32,12 +33,20 @@ function PrimaryModal(props: PrimaryModalProps) {
     useEffect(() => {
         function generateProductCards() {
             async function fetchData() {
-                const response = await fetch(url("/api/products/get-random-products"), {
-                  method: 'GET',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  }
-                });
+                const headerObject = {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+                const colorResponse = await fetch(url("/api/misc-data/available-colors"), headerObject);
+                const colorData = await colorResponse.json();
+                const availableColors: AvailableColor[] = Object.entries(colorData).map(([color, availability]) => ({
+                    color: color as string,
+                    available: availability as boolean
+                }));
+
+                const response = await fetch(url("/api/products/get-random-products"), headerObject);
                 const products = await response.json();
                 let i = 0;
                 let mappedProductCards = products.map((product: {id: string, name: string, images: string[], price: number, rating: number, redirect: string, colors: string[]}) => {
@@ -49,6 +58,7 @@ function PrimaryModal(props: PrimaryModalProps) {
                             price={product.price} 
                             rating={product.rating} 
                             colorOptions={product.colors}
+                            availableColors={availableColors}
                             redirect={"/"}
                             largeCard={i == 5 ? true : false}
                             popProductAdded={props.popProductAdded}/>
