@@ -127,9 +127,21 @@
     stroke-linecap: butt;
     stroke-miterlimit: 10;
     stroke-linejoin: miter;
-    stroke-width: 4;
+    stroke-width: 1;
     fill: #102542;
     transition: all 0.1s ease-in-out;
+}
+
+.cart-notification {
+    width: 1.5rem;
+    height: 1.5rem;
+    stroke: #F7F4F3;
+    stroke-linecap: butt;
+    stroke-miterlimit: 10;
+    stroke-linejoin: miter;
+    stroke-width: 1;
+    fill: #F7F4F3;
+    opacity: 0;
 }
 
 .cart:hover .cart-icon {

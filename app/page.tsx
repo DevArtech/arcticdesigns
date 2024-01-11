@@ -18,6 +18,8 @@ function Page() {
   function popProductAdded(name: string, image: string) {
     const docImage = document.getElementById("addedProductImage");
     const docName = document.getElementById("addedProductName");
+    const notif = document.getElementById("notification");
+    notif.style.opacity = "1";
     if(docImage) {
       docImage.setAttribute("src", image);
       docName.innerHTML = name;

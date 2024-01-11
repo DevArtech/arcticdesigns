@@ -58,6 +58,7 @@
 .dropdown-menu li.unavailable {
     background-color: #ACB1BB;
     cursor: default;
+    text-decoration: line-through
 }
 
 .dropdown-menu li:not(.unavailable):hover {
