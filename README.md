@@ -5,6 +5,7 @@ Website for Arctic Designs - EComm 3D Printing Site\
 \
 Coding Time:\
 [![wakatime](https://wakatime.com/badge/user/018c7a08-7532-4661-9881-1eb8ff884fb5/project/018ca4bd-735e-4f9b-8255-16a1b24f2f95.svg?style=flat-square)](https://wakatime.com/badge/user/018c7a08-7532-4661-9881-1eb8ff884fb5/project/018ca4bd-735e-4f9b-8255-16a1b24f2f95)\
+[![Commit Hisotry](https://wakatime.com/share/@018c7a08-7532-4661-9881-1eb8ff884fb5/8c750d51-b49d-40cc-92a1-5291109ea07f.png)](https://wakatime.com/)
 ![Figma Mockup](https://raw.githubusercontent.com/DevArtech/arcticdesigns/main/public/figma-mockup.png)
 ### Built With
 ![Static Badge](https://img.shields.io/badge/React-%2361DAFB?style=flat-square&logo=react&logoColor=%23000000)
@@ -16,9 +17,3 @@ Coding Time:\
 ![Static Badge](https://img.shields.io/badge/MongoDB-%2347A248?style=flat-square&logo=mongodb&logoColor=%23FFFFFF)
 ![Static Badge](https://img.shields.io/badge/Amazon%20AWS-%23232F3E?style=flat-square&logo=amazonaws)
 ![Static Badge](https://img.shields.io/badge/Docker-%232496ED?style=flat-square&logo=docker&logoColor=%23ffffff)
-
-### Percent Time per Language
-[![Alt text](https://wakatime.com/share/@018c7a08-7532-4661-9881-1eb8ff884fb5/2cc6fb1c-a7e8-4b2d-831a-23f7441e48b2.png)](https://wakatime.com/)
-
-### Commit History
-[![Commit Hisotry](https://wakatime.com/share/@018c7a08-7532-4661-9881-1eb8ff884fb5/8c750d51-b49d-40cc-92a1-5291109ea07f.png)](https://wakatime.com/)
