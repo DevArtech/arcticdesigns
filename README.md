@@ -17,4 +17,8 @@ Coding Time:\
 ![Static Badge](https://img.shields.io/badge/Amazon%20AWS-%23232F3E?style=flat-square&logo=amazonaws)
 ![Static Badge](https://img.shields.io/badge/Docker-%232496ED?style=flat-square&logo=docker&logoColor=%23ffffff)
 
+### Percent Time per Language
+[![Alt text](https://wakatime.com/share/@018c7a08-7532-4661-9881-1eb8ff884fb5/2cc6fb1c-a7e8-4b2d-831a-23f7441e48b2.png)](https://wakatime.com/)
 
+### Commit History
+[![Commit Hisotry](https://wakatime.com/share/@018c7a08-7532-4661-9881-1eb8ff884fb5/8c750d51-b49d-40cc-92a1-5291109ea07f.png)](https://wakatime.com/)
