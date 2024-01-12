@@ -51,6 +51,7 @@
 .star-rating {
     position: relative;
     gap: 0.25rem;
+    text-shadow: 0.5px 0.5px 2px #102542;
 }
 
 .star {
