@@ -5,7 +5,7 @@ import ProductCard from './ProductCard'
 import AvailableColor from './utils/availablecolors';
 
 interface PrimaryModalProps {
-    popProductAdded(name: string, image: string): void;
+    popProductAdded(name: string, image: string, color: string): void;
 }
 
 function PrimaryModal(props: PrimaryModalProps) {
@@ -50,6 +50,7 @@ function PrimaryModal(props: PrimaryModalProps) {
                 let mappedProductCards = products.map((product: {id: string, name: string, images: string[], price: number, rating: number, redirect: string, colors: string[]}) => {
                     i++;
                     return <ProductCard 
+                            instance={i}
                             key={product.id}
                             name={product.name} 
                             image={product.images[0]} 

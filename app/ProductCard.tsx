@@ -4,6 +4,7 @@ import ColorSelector from './ColorSelector';
 import AvailableColor from './utils/availablecolors';
 
 interface ProductCardProps {
+    instance: number;
     name: string;
     image: string;
     price: number;
@@ -12,11 +13,19 @@ interface ProductCardProps {
     availableColors: AvailableColor[];
     redirect: string;
     largeCard: boolean;
-    popProductAdded(name: string, image: string): void;
+    popProductAdded(name: string, image: string, color: string): void;
 };
 
 
 function ProductCard(props: ProductCardProps) {
+    function getSelectedColor() {
+        const selectedColor = document.getElementById("selectedColor" + props.instance);
+        if(selectedColor) {
+            return selectedColor.innerHTML;
+        }
+        return "";
+    }
+
     const StarRating = (rating: number, isLargeCard: boolean) => {
         let i = 1.1;
         if(isLargeCard) {
@@ -52,10 +61,11 @@ function ProductCard(props: ProductCardProps) {
         {StarRating(props.rating, props.largeCard)}
         <div style={{display : "flex", marginTop: props.largeCard ? "0.25rem" : "2rem", width: "100%", justifyContent: "space-around"}}>
                 <ColorSelector
+                    instance={props.instance}
                     options={props.colorOptions}
                     availableColors={props.availableColors}
                     isLargeCard={props.largeCard}/>
-                <button onClick={() => props.popProductAdded(props.name, props.image)} className={styles["add-to-cart-button"]}>
+                <button onClick={() => props.popProductAdded(props.name, props.image, getSelectedColor())} className={styles["add-to-cart-button"]}>
                     <svg className={styles["add-to-cart-icon"]} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xmlSpace="preserve">
                         <defs/>
                         <g transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">

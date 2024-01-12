@@ -15,19 +15,21 @@ function Page() {
     document.title = 'Arctic Designs';
   }, []);
 
-  function popProductAdded(name: string, image: string) {
+  function popProductAdded(name: string, image: string, color: string) {
     const docImage = document.getElementById("addedProductImage");
     const docName = document.getElementById("addedProductName");
+    const docColor = document.getElementById("addedProductColor");
     const notif = document.getElementById("notification");
     notif.style.fill = "#F7F4F3FF";
     notif.style.stroke = "#F7F4F3FF";
     if(docImage) {
       docImage.setAttribute("src", image);
       docName.innerHTML = name;
+      docColor.innerHTML = "Color: " + color;
     } else {
       const origin =  document.getElementById("cart");
       const modal = (
-        <ProductAddedModal name={name} image={image} />
+        <ProductAddedModal name={name} image={image} color={color}/>
       );
       const root = ReactDOM.createRoot(origin);
       root.render(modal);
