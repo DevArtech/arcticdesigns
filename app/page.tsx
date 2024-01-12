@@ -19,7 +19,8 @@ function Page() {
     const docImage = document.getElementById("addedProductImage");
     const docName = document.getElementById("addedProductName");
     const notif = document.getElementById("notification");
-    notif.style.opacity = "1";
+    notif.style.fill = "#F7F4F3FF";
+    notif.style.stroke = "#F7F4F3FF";
     if(docImage) {
       docImage.setAttribute("src", image);
       docName.innerHTML = name;

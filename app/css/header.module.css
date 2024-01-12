@@ -9,6 +9,14 @@
     width: 100%;
     position: fixed;
     backdrop-filter: blur(16px);
+    box-shadow:
+  0 2.8px 2.2px rgba(16, 37, 66, 0.034),
+  0 6.7px 5.3px rgba(16, 37, 66, 0.048),
+  0 12.5px 10px rgba(16, 37, 66, 0.06),
+  0 22.3px 17.9px rgba(16, 37, 66, 0.072),
+  0 41.8px 33.4px rgba(16, 37, 66, 0.086),
+  0 100px 80px rgba(16, 37, 66, 0.12)
+;
 }
 
 .header-logo {
@@ -135,13 +143,13 @@
 .cart-notification {
     width: 1.5rem;
     height: 1.5rem;
-    stroke: #F7F4F3;
+    stroke: #F7F4F300;
     stroke-linecap: butt;
     stroke-miterlimit: 10;
     stroke-linejoin: miter;
     stroke-width: 1;
-    fill: #F7F4F3;
-    opacity: 0;
+    fill: #F7F4F300;
+    transition: all 0.2s ease-in-out;
 }
 
 .cart:hover .cart-icon {

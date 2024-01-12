@@ -9,13 +9,11 @@ interface PrimaryModalProps {
 }
 
 function PrimaryModal(props: PrimaryModalProps) {
-
     const [searchBarPlaceholder, setSearchBarPlaceholder] = useState("");
     const [productCards, setProductCards] = useState<React.ReactNode[]>([]);
     const [initialLoad, setInitialLoad] = useState(false);
 
     useEffect(() => {
-        const searchBar = document.getElementById("searchInputField");
         async function fetchData() {
           const response = await fetch(url("/api/products/total-count"), {
             method: 'GET',

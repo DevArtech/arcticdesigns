@@ -13,6 +13,8 @@
     padding-right: 1.25rem;
     border-radius: 6px;
     width: 100%;
+    backdrop-filter: blur(16px);
+    box-shadow: 1px 1px 1px #102542;
 }
 
 .dropdown-value {
