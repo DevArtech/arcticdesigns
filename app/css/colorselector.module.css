@@ -14,7 +14,7 @@
     border-radius: 6px;
     width: 100%;
     backdrop-filter: blur(16px);
-    box-shadow: 1px 1px 1px #102542;
+    box-shadow: 1px 1px 3px #102542;
 }
 
 .dropdown-value {
@@ -47,6 +47,8 @@
     border-radius: 6px;
     backdrop-filter: blur(16px);
     width: auto;
+    text-shadow: none;
+    box-shadow: 1px 1px 3px #102542;
 }
 
 .dropdown-menu li {

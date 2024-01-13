@@ -13,6 +13,11 @@ function PrimaryModal(props: PrimaryModalProps) {
     const [productCards, setProductCards] = useState<React.ReactNode[]>([]);
     const [initialLoad, setInitialLoad] = useState(false);
 
+    function focusSearchField() {
+        const searchField = document.getElementById("searchField") as HTMLInputElement;
+        searchField.focus();
+    }
+
     useEffect(() => {
         async function fetchData() {
           const response = await fetch(url("/api/products/total-count"), {
@@ -91,7 +96,7 @@ function PrimaryModal(props: PrimaryModalProps) {
                         <div className={styles["visit-shop-modal-border"]}></div>
                     </a>
                     <div style={{width: '110%', display : 'flex', marginTop: '1.25rem', gap: '0.5rem'}}>
-                    <button className={styles["search-bar"]}>
+                    <button onClick={focusSearchField} className={styles["search-bar"]}>
                         <svg className={styles["search-icon"]} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xmlSpace="preserve">
                             <defs/>
                             <g transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
@@ -99,7 +104,7 @@ function PrimaryModal(props: PrimaryModalProps) {
                             </g>
                         </svg>
                         <span/>
-                            <input className={styles["search-input-field"]} type="text" placeholder={searchBarPlaceholder}/>
+                            <input id="searchField" className={styles["search-input-field"]} type="text" placeholder={searchBarPlaceholder}/>
                     </button>
                     <button className={styles["search-button"]}>Search</button>
                     </div>

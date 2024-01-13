@@ -15,7 +15,8 @@ def get_product_count():
     collections = dbconn.get_all_collections("products")
     product_count = 0
     for collection in collections:
-        product_count += sum(1 for _ in dbconn.get_all_docs("products", collection))
+        if collection != "misc_data":
+            product_count += sum(1 for _ in dbconn.get_all_docs("products", collection))
     return jsonify(product_count)
 
 @app.route("/api/products/get-random-products", methods=["GET"])

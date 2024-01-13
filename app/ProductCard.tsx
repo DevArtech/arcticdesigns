@@ -27,23 +27,12 @@ function ProductCard(props: ProductCardProps) {
     }
 
     const StarRating = (rating: number, isLargeCard: boolean) => {
-        let i = 1.1;
-        if(isLargeCard) {
-            i = 6.1;
-        }
         return (
           <div className={styles["star-rating"]}>
-            {[...Array(5)].map(() => {   
-                i++;     
-                return (       
-                    <div key={isLargeCard ? i - 1.1 : i - 6.1}>  
-                        <span style={{left: `${i}rem`}} className={styles["star-unfilled"]}>&#9733;</span>    
-                        {    
-                            (isLargeCard ? i - 6.1 : i - 1.1) <= rating ? <span style={{left: `${i}rem`}} className={styles["star"]}>&#9733;</span> : ""
-                        }
-                    </div>
-                );
-            })}
+            <span className={isLargeCard ? styles["large-stars-unfilled"] : styles["stars-unfilled"]}>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <div style={{width : `${rating - 0.6}em`}} className={isLargeCard ? styles["large-stars-block"] : styles["stars-block"]}>
+                <span className={styles["stars"]}>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            </div>
           </div>
         );
       };      
