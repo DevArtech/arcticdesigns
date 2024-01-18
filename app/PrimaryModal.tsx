@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { url } from './config/utils';
 import ProductCard from './ProductCard'
 import AvailableColor from './utils/availablecolors';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 interface PrimaryModalProps {
     popProductAdded(name: string, image: string, color: string): void;
@@ -11,7 +13,32 @@ interface PrimaryModalProps {
 function PrimaryModal(props: PrimaryModalProps) {
     const [searchBarPlaceholder, setSearchBarPlaceholder] = useState("");
     const [productCards, setProductCards] = useState<React.ReactNode[]>([]);
+    const [cardSpacers, setProductSpacers] = useState<React.ReactNode[]>([]);
     const [initialLoad, setInitialLoad] = useState(false);
+    const [recommendedItem, setRecommendedItem] = useState<React.ReactNode>();
+
+    const responsive = {
+        superLargeDesktop: {
+            breakpoint: { max: 4000, min: 3000 },
+            items: 4,
+            slidesToSlide: 2
+          },
+          desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 4,
+            slidesToSlide: 2
+          },
+          tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 4,
+            slidesToSlide: 2
+          },
+          mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 4,
+            slidesToSlide: 2
+          }
+      };
 
     function focusSearchField() {
         const searchField = document.getElementById("searchField") as HTMLInputElement;
@@ -49,8 +76,8 @@ function PrimaryModal(props: PrimaryModalProps) {
                     available: availability as boolean
                 }));
 
-                const response = await fetch(url("/api/products/get-random-products"), headerObject);
-                const products = await response.json();
+                const primaryResponse = await fetch(url("/api/products/get-random-products"), headerObject);
+                const products = await primaryResponse.json();
                 let i = 0;
                 let mappedProductCards = products.map((product: {id: string, name: string, images: string[], price: number, rating: number, redirect: string, colors: string[]}) => {
                     i++;
@@ -64,17 +91,31 @@ function PrimaryModal(props: PrimaryModalProps) {
                             colorOptions={product.colors}
                             availableColors={availableColors}
                             redirect={"/"}
-                            largeCard={i == 5 ? true : false}
+                            largeCard={false}
                             popProductAdded={props.popProductAdded}/>
                 });
-                let finalProductCards = [];
-                for(let j = 0; j < mappedProductCards.length; j++) {
-                    finalProductCards.push(mappedProductCards[j]);
-                    if(j < 3) {
-                        finalProductCards.push(<div key={j} className={styles["product-card-spacer"]}/>);
-                    }
+                setProductCards(productCards.length <= 0 ? mappedProductCards : productCards);
+
+                const spacers: React.ReactNode[] = []
+                for(let i = 1; i < 4; i++) {
+                    spacers.push(<span className={styles["product-card-spacer"]}/>)
                 }
-                setProductCards(productCards.length <= 0 ? finalProductCards : productCards);
+                setProductSpacers(spacers);
+
+                const recommendedResponse = await fetch(url("/api/products/get-user-recommended-item"), headerObject);
+                const recommendedProduct = await recommendedResponse.json();
+                setRecommendedItem(<ProductCard 
+                    instance={0}
+                    key={recommendedProduct.id}
+                    name={recommendedProduct.name} 
+                    image={recommendedProduct.images[0]} 
+                    price={recommendedProduct.price} 
+                    rating={recommendedProduct.rating} 
+                    colorOptions={recommendedProduct.colors}
+                    availableColors={availableColors}
+                    redirect={"/"}
+                    largeCard={true}
+                    popProductAdded={props.popProductAdded}/>);
             }
             fetchData();
         }
@@ -109,9 +150,15 @@ function PrimaryModal(props: PrimaryModalProps) {
                     <button className={styles["search-button"]}>Search</button>
                     </div>
                 </div>
-                <div className={styles["product-cards"]}>
+                <Carousel 
+                    containerClass={styles["product-cards"]} 
+                    responsive={responsive}
+                    infinite={true}
+                    showDots={true}
+                    removeArrowOnDeviceType={["tablet", "mobile"]}>
                     { productCards }
-                </div>
+                </Carousel>
+                { recommendedItem }
                 <img className={styles["modal-background"]} src="/primary-modal-background.png" alt="Collection of 3D printed items on a blue background" />
             </div>
         </div>

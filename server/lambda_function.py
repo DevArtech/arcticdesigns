@@ -48,6 +48,11 @@ def get_available_colors():
     colors = dbconn.get_doc("products", "misc_data", "659e165de751f017ecdcc0af")['colors']
     return jsonify(colors)
 
+@app.route("/api/products/get-user-recommended-item", methods=["GET"])
+def get_recommended_item():
+    products = get_random_products()
+    return jsonify(products.json[0])
+
 def lambda_handler(event, context):
     return awsgi.response(app, event, context)
 

@@ -30,8 +30,10 @@ function ProductCard(props: ProductCardProps) {
         return (
           <div className={styles["star-rating"]}>
             <span className={isLargeCard ? styles["large-stars-unfilled"] : styles["stars-unfilled"]}>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-            <div style={{width : `${rating - 0.6}em`}} className={isLargeCard ? styles["large-stars-block"] : styles["stars-block"]}>
-                <span className={styles["stars"]}>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <div className={styles["stars-alignment"]}>
+                <div style={{width : `${rating - 0.6}em`}} className={isLargeCard ? styles["large-stars-block"] : styles["stars-block"]}>
+                    <span className={styles["stars"]}>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                </div>
             </div>
           </div>
         );
