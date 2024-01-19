@@ -52,6 +52,8 @@
     height: 15rem;
     overflow-y: scroll;
     scrollbar-width: thin;
+    scrollbar-color: #48B8FE #F7F4F3;
+    scroll-snap-type: y mandatory;
 }
 
 .dropdown-menu li {
@@ -60,6 +62,7 @@
     transition: all 0.1s ease-in-out;
     z-index: 10;
     white-space: nowrap;
+    scroll-snap-align: start;
 }
 
 .dropdown-menu li.unavailable {
