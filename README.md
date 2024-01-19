@@ -16,3 +16,24 @@ Coding Time:\
 ![Static Badge](https://img.shields.io/badge/MongoDB-%2347A248?style=flat-square&logo=mongodb&logoColor=%23FFFFFF)
 ![Static Badge](https://img.shields.io/badge/Amazon%20AWS-%23232F3E?style=flat-square&logo=amazonaws)
 ![Static Badge](https://img.shields.io/badge/Docker-%232496ED?style=flat-square&logo=docker&logoColor=%23ffffff)
+
+## How to Setup
+1. Clone the Repository
+2. Create a .env file with the following:
+```
+ATLAS_URI=[Your MongoDB Endpoint]
+API_ENDPOINT=[Your Server Endpoint (or local: http://127.0.0.1:8080)]
+```
+3. Run the following commands (for Windows)
+ ```
+ > npm install
+ > cd server 
+ > python -m venv venv
+ > .\venv\Scripts\activate
+ > pip install -r requirements.txt
+ ```
+
+ 4. To run the application, run the following command in the terminal which is in the server directory: ```python .\lambda_function.py```
+ 5. Open another terminal in the main directory, and run ```npm run dev```
+ 6. Go to [https://localhost:3000](https://localhost:3000) to see the live local site
+
