@@ -1,0 +1,23 @@
+.loader {
+    border-radius: 1em;
+    padding: 0.5rem 1rem;
+    margin: 0 auto;
+    width: 0;
+    height: 0;
+    animation: spin 1.5s linear infinite;
+    margin-bottom: 1rem;
+}
+  
+@keyframes spin {
+    0% { 
+        transform: rotate(0deg); 
+        padding: 0.5rem 1rem;
+    }
+    50% {
+        padding: 0.5rem 0.25rem;
+    }
+    100% { 
+        transform: rotate(360deg); 
+        padding: 0.5rem 1rem;
+    }
+}

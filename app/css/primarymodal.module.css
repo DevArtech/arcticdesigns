@@ -153,6 +153,15 @@
     overflow: visible;
 }
 
+.carousel-loader {
+    position: absolute;
+    height: 12.5rem;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 .product-cards button:not(:has(div)):not(:has(svg)) {
     background-color: #10254280;
     color: #F7F4F3;

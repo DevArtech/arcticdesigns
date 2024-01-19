@@ -4,6 +4,7 @@ import styles from './css/collectionsmodal.module.css';
 import { useState, useRef, useEffect } from 'react';
 import ProductCard from './ProductCard';
 import AvailableColor from './utils/availablecolors';
+import LoadingSpinner from './LoadingSpinner';
 
 interface ProductCardProps {
     id: string;
@@ -199,7 +200,9 @@ function CollectionsModal(props: CollectionsModalProps) {
                 <div className={styles["collection-display"]}>{ collectionCards[selectedCollection] }</div>
                 <div style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', margin: '0 0 0.75rem 0'}}>
                     {
-                        loading && <div className={styles["loader"]}></div>
+                        loading && <LoadingSpinner
+                            color={"#102542"}
+                            solid={false}/>
                     }
                     <button onClick={loadMoreProducts} className={styles["load-more"]}>Load More</button>
                 </div>

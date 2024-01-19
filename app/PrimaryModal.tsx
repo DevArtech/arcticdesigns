@@ -5,6 +5,7 @@ import ProductCard from './ProductCard'
 import AvailableColor from './utils/availablecolors';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import LoadingSpinner from './LoadingSpinner';
 
 interface PrimaryModalProps {
     popProductAdded(data: {name: string, image: string, color: string}): void;
@@ -16,6 +17,7 @@ function PrimaryModal(props: PrimaryModalProps) {
     const [cardSpacers, setProductSpacers] = useState<React.ReactNode[]>([]);
     const [initialLoad, setInitialLoad] = useState(false);
     const [recommendedItem, setRecommendedItem] = useState<React.ReactNode>();
+    const [loading, setLoading] = useState(true);
 
     const responsive = {
         superLargeDesktop: {
@@ -95,6 +97,7 @@ function PrimaryModal(props: PrimaryModalProps) {
                             popProductAdded={props.popProductAdded}/>
                 });
                 setProductCards(productCards.length <= 0 ? mappedProductCards : productCards);
+                setLoading(false);
 
                 const spacers: React.ReactNode[] = []
                 for(let i = 1; i < 4; i++) {
@@ -149,6 +152,11 @@ function PrimaryModal(props: PrimaryModalProps) {
                     </button>
                     <button className={styles["search-button"]}>Search</button>
                     </div>
+                </div>
+                <div className={styles["carousel-loader"]}>
+                    {
+                        loading && <LoadingSpinner color={"#48B8FE"} solid={false} />
+                    }
                 </div>
                 <Carousel 
                     containerClass={styles["product-cards"]} 
