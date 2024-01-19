@@ -68,11 +68,9 @@
 }
 
 .stars-block {
-    position: absolute;
     overflow: hidden;
     height: 1.25em;
     max-width: 4.1em;
-    left: 27.5%;
 }
 
 .large-stars-block {
@@ -85,6 +83,8 @@
 }
 
 .stars-alignment {
+    display: flex;
+    justify-content: center;
     position: absolute;
     overflow: hidden;
     height: 1.25em;

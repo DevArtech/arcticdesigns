@@ -4,7 +4,7 @@ import ColorSelector from './ColorSelector';
 import AvailableColor from './utils/availablecolors';
 
 interface ProductCardProps {
-    instance: number;
+    id: string;
     name: string;
     image: string;
     price: number;
@@ -13,18 +13,12 @@ interface ProductCardProps {
     availableColors: AvailableColor[];
     redirect: string;
     largeCard: boolean;
-    popProductAdded(name: string, image: string, color: string): void;
+    popProductAdded(data: {name: string, image: string, color: string}): void;
 };
 
 
 function ProductCard(props: ProductCardProps) {
-    function getSelectedColor() {
-        const selectedColor = document.getElementById("selectedColor" + props.instance);
-        if(selectedColor) {
-            return selectedColor.innerHTML;
-        }
-        return "";
-    }
+    const [selectedColor, setSelectedColor] = useState('');
 
     const StarRating = (rating: number, isLargeCard: boolean) => {
         return (
@@ -34,13 +28,16 @@ function ProductCard(props: ProductCardProps) {
                 <div style={{width : `${rating - 0.6}em`}} className={isLargeCard ? styles["large-stars-block"] : styles["stars-block"]}>
                     <span className={styles["stars"]}>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
                 </div>
+                {
+                    rating < 5 ? <div style={{width: `${4.75 - rating}em`}}> </div> : ""
+                }
             </div>
           </div>
         );
       };      
 
     return (
-    <div className={props.largeCard ? styles["product-card-large"] : styles["product-card"]}>
+    <div id={props.id} className={props.largeCard ? styles["product-card-large"] : styles["product-card"]}>
         <img src={props.image} alt={props.name} className={styles["product-image"]}/>
         <div className={styles["name-container"]}>
             <p className={styles["name"]}>{props.name}</p>
@@ -52,11 +49,13 @@ function ProductCard(props: ProductCardProps) {
         {StarRating(props.rating, props.largeCard)}
         <div style={{display : "flex", marginTop: props.largeCard ? "0.25rem" : "2rem", width: "100%", justifyContent: "space-around"}}>
                 <ColorSelector
-                    instance={props.instance}
+                    id={props.id}
                     options={props.colorOptions}
                     availableColors={props.availableColors}
-                    isLargeCard={props.largeCard}/>
-                <button onClick={() => props.popProductAdded(props.name, props.image, getSelectedColor())} className={styles["add-to-cart-button"]}>
+                    isLargeCard={props.largeCard}
+                    selectedColor={selectedColor}
+                    setSelectedColor={setSelectedColor}/>
+                <button onClick={() => props.popProductAdded({ name: props.name, image: props.image, color: selectedColor })} className={styles["add-to-cart-button"]}>
                     <svg className={styles["add-to-cart-icon"]} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xmlSpace="preserve">
                         <defs/>
                         <g transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">

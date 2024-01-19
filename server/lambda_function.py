@@ -4,6 +4,8 @@ from flask_cors import CORS
 import json
 import awsgi
 import random
+import uuid
+import time
 
 # App Instance
 app = Flask(__name__)
@@ -53,8 +55,28 @@ def get_recommended_item():
     products = get_random_products()
     return jsonify(products.json[0])
 
+@app.route("/api/products/get-collections", methods=["GET"])
+def get_collections():
+    collections = dbconn.get_all_collections("products")
+    collections = [collection for collection in collections if collection != "misc_data"]
+    return jsonify(collections)
+
+@app.route("/api/products/get-products-not/<collection>/<quantity>", methods=["POST"])
+def get_products_not(collection: str, quantity: int):
+    excluded_products = request.json
+    products = []
+    cursor = dbconn.get_all_docs("products", collection)
+    for product in cursor:
+        if product["prod_id"] not in excluded_products:
+            # Append all keys except _id
+            products.append({key: product[key] for key in product if key != "_id"})
+    random.shuffle(products)
+    return jsonify(products[:int(quantity)] if int(quantity) > 0 else products)
+
 def lambda_handler(event, context):
     return awsgi.response(app, event, context)
+
+# dbconn.update_one("products", collection, {"_id" : product["_id"]}, {"$set": {"prod_id": str(uuid.uuid4()) + "-" + str(int(time.time_ns()))}})
 
 if __name__ == "__main__":
     app.run(debug=True, port=8080)

@@ -1,0 +1,130 @@
+.collections-modal {
+    padding: 0 2rem 2rem 2rem;
+    width: 100%;
+    height: auto;
+}
+
+.collections-field {
+    border: 1px solid #102542;
+    border-radius: 2rem;
+    padding: 0.75rem 0.75rem 0 0.75rem;
+}
+
+.collections-legend {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #102542;
+    margin-left: 2rem;
+    padding: 0 0.25rem;
+}
+
+.collections-selector {
+    position: relative;
+    display: inline-block;
+    z-index: 10;
+    width: 100%;
+}
+
+.dropdown-toggle {
+    font-size: 0.8em;
+    border: 1px solid #102542;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+    padding-right: 1.25rem;
+    border-radius: 6px;
+    width: auto;
+    height: 2em;
+    backdrop-filter: blur(16px);
+    transition: all 0.1s ease-in-out;
+}
+
+.dropdown-toggle:hover {
+    color: #48B8FE;
+    border: 1px solid #48B8FE;
+}
+
+.dropdown-menu {
+    list-style: none;
+    padding: 0;
+    position: absolute;
+    background-color: transparent;
+    border: 1px solid #102542;
+    display: block;
+    z-index: 20;
+    border-radius: 6px;
+    backdrop-filter: blur(16px);
+    width: auto;
+    text-shadow: none;
+}
+
+.dropdown-menu li {
+    font-size: 0.8em;
+    text-align: left;
+    padding: 5px 10px;
+    transition: all 0.1s ease-in-out;
+    z-index: 20;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #F7F4F3;
+    background-color: #1025424A;
+}
+
+.dropdown-menu li:hover {
+    color: #48B8FE;
+}
+
+.collection-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.collection-display > div {
+    width: calc(100% / 6.225);
+    background-color: #1025424A;
+    border-radius: 1rem;
+    border: 1px solid #102542;
+}
+
+.collection-display > div > div > div > ul > li {
+    background-color: #10254280;
+}
+
+.load-more {
+    border: 1px solid #102542;
+    border-radius: 1em;
+    padding: 0.5rem 1rem;
+    margin: 0 auto;
+    color: #102542;
+    transition: all 0.1s ease-in-out;
+}
+
+.load-more:hover {
+    color: #48B8FE;
+    border: 1px solid #48B8FE;
+}
+
+.loader {
+    border: 1px solid #102542;
+    border-radius: 1em;
+    padding: 0.5rem 1rem;
+    margin: 0 auto;
+    color: #102542;
+    animation: spin 1.5s linear infinite;
+    margin-bottom: 1rem;
+}
+  
+@keyframes spin {
+    0% { 
+        transform: rotate(0deg); 
+        padding: 0.5rem 1rem;
+    }
+    50% {
+        padding: 0.5rem 0.25rem;
+    }
+    100% { 
+        transform: rotate(360deg); 
+        padding: 0.5rem 1rem;
+    }
+}

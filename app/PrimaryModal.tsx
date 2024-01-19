@@ -7,7 +7,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 interface PrimaryModalProps {
-    popProductAdded(name: string, image: string, color: string): void;
+    popProductAdded(data: {name: string, image: string, color: string}): void;
 }
 
 function PrimaryModal(props: PrimaryModalProps) {
@@ -79,11 +79,11 @@ function PrimaryModal(props: PrimaryModalProps) {
                 const primaryResponse = await fetch(url("/api/products/get-random-products"), headerObject);
                 const products = await primaryResponse.json();
                 let i = 0;
-                let mappedProductCards = products.map((product: {id: string, name: string, images: string[], price: number, rating: number, redirect: string, colors: string[]}) => {
+                let mappedProductCards = products.map((product: {prod_id: string, name: string, images: string[], price: number, rating: number, redirect: string, colors: string[]}) => {
                     i++;
                     return <ProductCard 
-                            instance={i}
-                            key={product.id}
+                            key={product.prod_id}
+                            id={product.prod_id}
                             name={product.name} 
                             image={product.images[0]} 
                             price={product.price} 
@@ -105,8 +105,8 @@ function PrimaryModal(props: PrimaryModalProps) {
                 const recommendedResponse = await fetch(url("/api/products/get-user-recommended-item"), headerObject);
                 const recommendedProduct = await recommendedResponse.json();
                 setRecommendedItem(<ProductCard 
-                    instance={0}
                     key={recommendedProduct.id}
+                    id={recommendedProduct.prod_id}
                     name={recommendedProduct.name} 
                     image={recommendedProduct.images[0]} 
                     price={recommendedProduct.price} 

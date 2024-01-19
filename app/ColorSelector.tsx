@@ -4,14 +4,15 @@ import { useState, useRef, useEffect } from 'react';
 import AvailableColor from './utils/availablecolors';
 
 interface DropdownProps {
-    instance: number;
+    id: string;
     options: string[];
     availableColors: AvailableColor[];
     isLargeCard: boolean;
+    selectedColor: string;
+    setSelectedColor(color: string): void;
 }
 
 const ColorSelector = (props: DropdownProps) => {
-    const [selectedColor, setSelectedColor] = useState(props.options[0]);
     const [isOpen, setIsOpen] = useState(false);
     const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -20,7 +21,7 @@ const ColorSelector = (props: DropdownProps) => {
     }      
 
     const handleOptionClick = (option: string) => {
-        setSelectedColor(option);
+        props.setSelectedColor(option);
         setIsOpen(false);
     };
 
@@ -49,10 +50,14 @@ const ColorSelector = (props: DropdownProps) => {
         };
     }, [isOpen]);
 
+    useEffect(() => {
+        props.setSelectedColor(props.options[0]);
+    }, [])
+
     return (
         <div className={styles["color-selector"]}>
-            <button onClick={handleToggleClick} ref={toggleButtonRef} className={styles["dropdown-toggle"]}><div style={{backgroundImage : `url("./colors/${selectedColor.toLowerCase()}.png")`, backgroundSize: "cover", boxShadow : selectedColor.toLowerCase() == "glow" ? "0 0 5px 3px rgba(0, 123, 155, 1)" : ""}} className={styles["color-preview"]}/>
-            <div id={`selectedColor${props.instance}`} className={`${styles["dropdown-value"]} ${props.isLargeCard ? styles["large-card"] : ""}`}>{selectedColor}</div>
+            <button onClick={handleToggleClick} ref={toggleButtonRef} className={styles["dropdown-toggle"]}><div style={{backgroundImage : `url("./colors/${props.selectedColor.toLowerCase()}.png")`, backgroundSize: "cover", boxShadow : props.selectedColor.toLowerCase() == "glow" ? "0 0 5px 3px rgba(0, 123, 155, 1)" : ""}} className={styles["color-preview"]}/>
+            <div id={`selectedColor${props.id}`} className={`${styles["dropdown-value"]} ${props.isLargeCard ? styles["large-card"] : ""}`}>{props.selectedColor}</div>
             {
                 isOpen ? <div style={{position: "absolute", right: "0.35em", top: "0.55em"}}>⌃</div> : <div style={{position: "absolute", right: "0.35em", top: "0.15em"}}>⌄</div>
             }

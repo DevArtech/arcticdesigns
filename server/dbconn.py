@@ -36,7 +36,7 @@ class DBConn:
         regex = {"_id": document["_id"]}
         new_doc = {"$set": {"name": "new_name"}}
         """
-        return self.cleint[db_name][collection_name].update_one(regex, new_doc)
+        return self.client[db_name][collection_name].update_one(regex, new_doc)
 
     def update_many(self, db_name: str, collection_name: str, regex: str, new_doc: str):
         return self.client[db_name][collection_name].update_many(regex, new_doc)
