@@ -150,7 +150,6 @@
     left: 0;
     z-index: 5;
     row-gap: 5rem;
-    overflow: visible;
 }
 
 .carousel-loader {
@@ -159,7 +158,18 @@
     bottom: 0;
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 53.5vw;
+}
+
+.recommended-loader {
+    position: absolute;
+    height: 15rem;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    width: 27.5vw;
+    margin-left: 0;
+    right: 0;
 }
 
 .product-cards button:not(:has(div)):not(:has(svg)) {

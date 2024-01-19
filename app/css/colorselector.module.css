@@ -49,6 +49,9 @@
     width: auto;
     text-shadow: none;
     box-shadow: 1px 1px 3px #102542;
+    height: 15rem;
+    overflow-y: scroll;
+    scrollbar-width: thin;
 }
 
 .dropdown-menu li {

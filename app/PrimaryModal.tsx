@@ -18,6 +18,7 @@ function PrimaryModal(props: PrimaryModalProps) {
     const [initialLoad, setInitialLoad] = useState(false);
     const [recommendedItem, setRecommendedItem] = useState<React.ReactNode>();
     const [loading, setLoading] = useState(true);
+    const [recommendedLoading, setRecommendedLoading] = useState(true);
 
     const responsive = {
         superLargeDesktop: {
@@ -119,6 +120,7 @@ function PrimaryModal(props: PrimaryModalProps) {
                     redirect={"/"}
                     largeCard={true}
                     popProductAdded={props.popProductAdded}/>);
+                setRecommendedLoading(false);
             }
             fetchData();
         }
@@ -156,6 +158,11 @@ function PrimaryModal(props: PrimaryModalProps) {
                 <div className={styles["carousel-loader"]}>
                     {
                         loading && <LoadingSpinner color={"#48B8FE"} solid={false} />
+                    }
+                </div>
+                <div className={styles["recommended-loader"]}>
+                    {
+                        recommendedLoading && <LoadingSpinner color={"#48B8FE"} solid={false} />
                     }
                 </div>
                 <Carousel 
