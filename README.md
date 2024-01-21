@@ -37,3 +37,12 @@ API_ENDPOINT=[Your Server Endpoint (or local: http://127.0.0.1:8080)]
  5. Open another terminal in the main directory, and run ```npm run dev```
  6. Go to [https://localhost:3000](https://localhost:3000) to see the live local site
 
+ ### How to use the Product Manager
+ The Product Manager is included with the server files, and some of the lambda logic requires the Product Manager for code simplicity. To ues the Product Manager, follow these steps:
+ 1. Open a new terminal
+ 2. Navigate to the server directory (```cd server```)
+ 3. Connect to the virtual environment with ```.\venv\Scripts\activate``` (for Windows)
+ 4. Run the Product Manager with ```python .\product-manager.py```
+
+ Once the Product Manager has started, you can type ```help``` to get all available commands
+
