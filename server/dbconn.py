@@ -25,7 +25,7 @@ class DBConn:
         return self.client[db_name][collection_name].find({})
     
     def get_doc(self, db_name: str, collection_name: str, doc_id: str):
-        return self.client[db_name][collection_name].find_one({'_id': ObjectId(doc_id)})
+        return self.client[db_name][collection_name].find_one({'prod_id': ObjectId(doc_id)})
     
     def find_one(self, db_name: str, collection_name: str, regex: Dict[str, str]):
         return self.client[db_name][collection_name].find_one(regex)
@@ -45,7 +45,7 @@ class DBConn:
         return self.client[db_name][collection_name].update_many(regex, new_doc)
     
     def delete_one(self, db_name: str, collection_name: str, doc_id: str):
-        return self.client[db_name][collection_name].delete_one({"_id": doc_id})
+        return self.client[db_name][collection_name].delete_one({"prod_id": doc_id})
     
     def delete_many(self, db_name: str, collection_name: str):
         return self.client[db_name][collection_name].delete_many({})

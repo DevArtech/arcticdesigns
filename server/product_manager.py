@@ -24,7 +24,7 @@ def get_collection_count() -> int:
     collections = [collection for collection in collections if collection != "misc_data"]
     return len(collections)
 
-def get_collection(collection: str) -> List[Dict[any]]:
+def get_collection(collection: str) -> List[Dict[str, any]]:
     cursor = dbconn.get_all_docs("products", collection)
     products = []
     for product in cursor:
@@ -36,12 +36,19 @@ def get_all_collections() -> List[str]:
     collections = [collection for collection in collections if collection != "misc_data"]
     return collections
 
-def get_product(prod_id: str) -> Dict[any]:
+def get_product(prod_id: str) -> Dict[str, any]:
     collections = get_all_collections()
     for collection in collections:
         document = dbconn.find_one("products", collection, {"prod_id" : prod_id})
         if document:
             return document
+        
+def _locate_product_collection(prod_id: str) -> str:
+    collections = get_all_collections()
+    for collection in collections:
+        document = dbconn.find_one("products", collection, {"prod_id" : prod_id})
+        if document:
+            return collection
         
 def _convert_image_to_base64(image_path: str) -> str:
     with open(image_path, 'rb') as image_file:
@@ -113,9 +120,18 @@ def _add_product() -> str:
     collection = input("Collection: ")
     result = dbconn.insert_doc("products", collection, product)
     if result.acknowledged:
-        return "Product successfully inserted: " + str(result.inserted_id)
+        return "Product successfully inserted: " + prod_id
     else:
         return "Product failed to insert"
+    
+def _remove_product():
+    prod_id = input("Enter a Product ID: ")
+    collection = _locate_product_collection(prod_id)
+    result = dbconn.delete_one("products", collection, prod_id)
+    if result.acknowledged:
+        return "Products removed: " + str(result.deleted_count)
+    else:
+        return "Product failed to remove"
 
 actions = {
     "help" : """
@@ -127,7 +143,7 @@ actions = {
     """,
     "get product" : _get_product,
     "add product" : _add_product,
-    "remove product" : "",
+    "remove product" : _remove_product,
     "update product" : "",
     "get collection" : _get_collection
 }
