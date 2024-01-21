@@ -118,7 +118,13 @@ def _add_product() -> str:
         return "Product failed to insert"
 
 actions = {
-    "help" : "test",
+    "help" : """
+    get product: Requires prod_id, returns product
+    add product: Adds a product to the products database
+    remove product: Requires prod_id, removes product
+    update product: Requires prod_id, updates product
+    get collection: Requires collection, returns all products in collection
+    """,
     "get product" : _get_product,
     "add product" : _add_product,
     "remove product" : "",
