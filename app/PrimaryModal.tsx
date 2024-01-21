@@ -14,7 +14,6 @@ interface PrimaryModalProps {
 function PrimaryModal(props: PrimaryModalProps) {
     const [searchBarPlaceholder, setSearchBarPlaceholder] = useState("");
     const [productCards, setProductCards] = useState<React.ReactNode[]>([]);
-    const [cardSpacers, setProductSpacers] = useState<React.ReactNode[]>([]);
     const [initialLoad, setInitialLoad] = useState(false);
     const [recommendedItem, setRecommendedItem] = useState<React.ReactNode>();
     const [loading, setLoading] = useState(true);
@@ -79,7 +78,7 @@ function PrimaryModal(props: PrimaryModalProps) {
                     available: availability as boolean
                 }));
 
-                const primaryResponse = await fetch(url("/api/products/get-random-products"), headerObject);
+                const primaryResponse = await fetch(url("/api/products/get-random-products/10"), headerObject);
                 const products = await primaryResponse.json();
                 let i = 0;
                 let mappedProductCards = products.map((product: {prod_id: string, name: string, images: string[], price: number, rating: number, redirect: string, colors: string[]}) => {
@@ -99,12 +98,6 @@ function PrimaryModal(props: PrimaryModalProps) {
                 });
                 setProductCards(productCards.length <= 0 ? mappedProductCards : productCards);
                 setLoading(false);
-
-                const spacers: React.ReactNode[] = []
-                for(let i = 1; i < 4; i++) {
-                    spacers.push(<span className={styles["product-card-spacer"]}/>)
-                }
-                setProductSpacers(spacers);
 
                 const recommendedResponse = await fetch(url("/api/products/get-user-recommended-item"), headerObject);
                 const recommendedProduct = await recommendedResponse.json();
@@ -169,7 +162,6 @@ function PrimaryModal(props: PrimaryModalProps) {
                     containerClass={styles["product-cards"]} 
                     responsive={responsive}
                     infinite={true}
-                    showDots={true}
                     removeArrowOnDeviceType={["tablet", "mobile"]}>
                     { productCards }
                 </Carousel>

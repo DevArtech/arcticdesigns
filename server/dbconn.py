@@ -27,6 +27,9 @@ class DBConn:
     def get_doc(self, db_name: str, collection_name: str, doc_id: str):
         return self.client[db_name][collection_name].find_one({'_id': ObjectId(doc_id)})
     
+    def find_one(self, db_name: str, collection_name: str, regex: Dict[str, str]):
+        return self.client[db_name][collection_name].find_one(regex)
+    
     def insert_doc(self, db_name: str, collection_name: str, doc: Dict[any, any]):
         return self.client[db_name][collection_name].insert_one(doc)
     

@@ -1,11 +1,9 @@
-from dbconn import DBConn
-from flask import Flask, jsonify, request
-from flask_cors import CORS
-import json
 import awsgi
 import random
-import uuid
-import time
+import product_manager
+from dbconn import DBConn
+from flask_cors import CORS
+from flask import Flask, jsonify, request
 
 # App Instance
 app = Flask(__name__)
@@ -14,15 +12,10 @@ CORS(app)
 
 @app.route("/api/products/total-count", methods=["GET"])
 def get_product_count():
-    collections = dbconn.get_all_collections("products")
-    product_count = 0
-    for collection in collections:
-        if collection != "misc_data":
-            product_count += sum(1 for _ in dbconn.get_all_docs("products", collection))
-    return jsonify(product_count)
+    return jsonify(product_manager.get_product_count())
 
-@app.route("/api/products/get-random-products", methods=["GET"])
-def get_random_products():
+@app.route("/api/products/get-random-products/<quantity>", methods=["GET"])
+def get_random_products(quantity: int = 0):
     collections = dbconn.get_all_collections("products")
     products = []
     for collection in collections:
@@ -34,7 +27,7 @@ def get_random_products():
                 # Append _id as a string
                 products[-1]["id"] = str(product["_id"])
     random.shuffle(products)
-    return jsonify(products)
+    return jsonify(products[:int(quantity)] if int(quantity) > 0 else products)
 
 @app.route("/api/products/<collection>/<quantity>", methods=["GET"])
 def get_amount_from_collection(collection: str, quantity: int):
@@ -57,9 +50,7 @@ def get_recommended_item():
 
 @app.route("/api/products/get-collections", methods=["GET"])
 def get_collections():
-    collections = dbconn.get_all_collections("products")
-    collections = [collection for collection in collections if collection != "misc_data"]
-    return jsonify(collections)
+    return jsonify(product_manager.get_all_collections())
 
 @app.route("/api/products/get-products-not/<collection>/<quantity>", methods=["POST"])
 def get_products_not(collection: str, quantity: int):

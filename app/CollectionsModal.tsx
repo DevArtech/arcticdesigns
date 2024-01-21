@@ -198,13 +198,17 @@ function CollectionsModal(props: CollectionsModalProps) {
                     </div>
                 </legend>
                 <div className={styles["collection-display"]}>{ collectionCards[selectedCollection] }</div>
-                <div style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', margin: '0 0 0.75rem 0'}}>
+                <div style={{width: '100%', display: 'flex', justifyContent: 'center', margin: '0 0 0.75rem 0'}}>
                     {
                         loading && <LoadingSpinner
                             color={"#102542"}
                             solid={false}/>
                     }
-                    <button onClick={loadMoreProducts} className={styles["load-more"]}>Load More</button>
+                </div>
+                <div style={{position: 'absolute', width: '100%', transform: 'translate(-3rem, -1.25rem)', display: 'flex', justifyContent: 'center'}}>
+                    <div style={{background: "#ebf1f2", padding: '0 0.5rem'}}>
+                        <button onClick={loadMoreProducts} className={styles["load-more"]}>Load More</button>
+                    </div>
                 </div>
             </fieldset>
         </div>

@@ -67,7 +67,7 @@ const ColorSelector = (props: DropdownProps) => {
                     {props.options.map((option, index) => (
                             <li 
                             className={getColor(option.toLowerCase()) ? "" : styles["unavailable"]}
-                            style={{display: "flex", backgroundColor: getColor(option.toLowerCase()) ? "" : "#F7F4F34A", cursor: getColor(option.toLowerCase()) ? "pointer" : "not-allowed", color : getColor(option.toLowerCase()) ? "" : "#F7F4F380"}} 
+                            style={{display: "flex", cursor: getColor(option.toLowerCase()) ? "pointer" : "not-allowed", color : getColor(option.toLowerCase()) ? "" : "#F7F4F380"}} 
                             onClick={getColor(option.toLowerCase()) ? () => handleOptionClick(option) : () => {}} key={index}>
                                 <div style={{backgroundImage : `url("./colors/${option.toLowerCase()}.png")`, backgroundSize: "cover", boxShadow : option.toLowerCase() == "glow" ? "0 0 5px 3px rgba(0, 123, 155, 1)" : ""}} className={styles["color-preview"]}/>
                                 {option}

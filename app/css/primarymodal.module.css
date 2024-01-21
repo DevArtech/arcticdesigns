@@ -144,7 +144,7 @@
 
 .product-cards {
     position: absolute;
-    width: 53.5vw;
+    width: 53vw;
     margin-left: 0;
     bottom: 0.5rem;
     left: 0;
@@ -193,21 +193,4 @@
     z-index: 2;
     row-gap: 5rem;
     pointer-events: none;
-}
-
-.card-spacers {
-    position: absolute;
-    bottom: 0;
-    width: 55vw;
-    height: 17.5rem;
-    padding: 1rem;
-}
-
-.product-card-spacer {
-    position: relative;
-    display: inline-block;
-    width: 1px;
-    height: 13rem;
-    background: linear-gradient(transparent, white, transparent);
-    margin-left: calc(100% / 4.25);
 }
