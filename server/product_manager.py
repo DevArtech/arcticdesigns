@@ -77,6 +77,14 @@ def _get_collection() -> str:
         product["images"] = images
     return "\n\n".join(str(product) for product in products)
 
+def _check_if_exists(prod_id: str):
+    collections = get_all_collections()
+    for collection in collections:
+        document = dbconn.find_one("products", collection, {"prod_id" : prod_id})
+        if document:
+            return True
+    return False
+
 def _get_product() -> str:
     prod_id = input("Enter a Product ID: ")
     product = get_product(prod_id)
@@ -132,6 +140,32 @@ def _remove_product():
         return "Products removed: " + str(result.deleted_count)
     else:
         return "Product failed to remove"
+    
+def _update_product():
+    prod_id = input("Enter a Product ID: ")
+    product = _check_if_exists(prod_id)
+    if product:
+        collection = _locate_product_collection(prod_id)
+        key = input("Key to update: ")
+        value = input("New value: ")
+        value_type = input("Value type: ")
+        if value_type == "int":
+            value = int(value)
+        elif value_type == "float":
+            value = float(value)
+        elif value_type == "bool":
+            value = bool(value)
+        elif value_type == "list":
+            value = value.split(",")
+        elif value_type == "date":
+            value = datetime.strptime(value, "%Y-%m-%d")
+        result = dbconn.update_one("products", collection, {"prod_id" : prod_id}, {"$set": {key: value}})
+        if result.acknowledged:
+            return "Product updated"
+        else:
+            return "Product failed to update"
+    else:
+        return "Product does not exist"
 
 actions = {
     "help" : """
@@ -144,7 +178,7 @@ actions = {
     "get product" : _get_product,
     "add product" : _add_product,
     "remove product" : _remove_product,
-    "update product" : "",
+    "update product" : _update_product,
     "get collection" : _get_collection
 }
 
