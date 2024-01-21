@@ -5,6 +5,7 @@ import uuid
 import base64
 import mimetypes
 from dbconn import DBConn
+from typing import List, Dict
 from datetime import datetime
 
 dbconn = DBConn()
@@ -23,31 +24,31 @@ def get_collection_count() -> int:
     collections = [collection for collection in collections if collection != "misc_data"]
     return len(collections)
 
-def get_collection(collection: str):
+def get_collection(collection: str) -> List[Dict[any]]:
     cursor = dbconn.get_all_docs("products", collection)
     products = []
     for product in cursor:
         products.append({key: product[key] for key in product if key != "_id"})
     return products
 
-def get_all_collections():
+def get_all_collections() -> List[str]:
     collections = dbconn.get_all_collections("products")
     collections = [collection for collection in collections if collection != "misc_data"]
     return collections
 
-def get_product(prod_id: str):
+def get_product(prod_id: str) -> Dict[any]:
     collections = get_all_collections()
     for collection in collections:
         document = dbconn.find_one("products", collection, {"prod_id" : prod_id})
         if document:
             return document
         
-def _convert_image_to_base64(image_path):
+def _convert_image_to_base64(image_path: str) -> str:
     with open(image_path, 'rb') as image_file:
         encoded_string = base64.b64encode(image_file.read()).decode()
     return encoded_string
 
-def _images_to_base64_web(folder_path):
+def _images_to_base64_web(folder_path: str) -> List[str]:
     base64_images = []
     for file_name in os.listdir(folder_path):
         if file_name.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp')):
@@ -59,7 +60,7 @@ def _images_to_base64_web(folder_path):
                 base64_images.append(data_uri)
     return base64_images
         
-def _get_collection():
+def _get_collection() -> str:
     collection = input("Choose a collection: ")
     products = get_collection(collection)
     for product in products:
@@ -69,7 +70,7 @@ def _get_collection():
         product["images"] = images
     return "\n\n".join(str(product) for product in products)
 
-def _get_product():
+def _get_product() -> str:
     prod_id = input("Enter a Product ID: ")
     product = get_product(prod_id)
     for element in product.keys():
@@ -78,7 +79,7 @@ def _get_product():
         json.dump(product, file, indent=4)
     return str(product) + "\n Product data wrote to: " + prod_id + ".json"
 
-def _add_product():
+def _add_product() -> str:
     name = input("Name: ")
     description = input("Description: ")
     price = int(float(input("Price: ")) * 100)
