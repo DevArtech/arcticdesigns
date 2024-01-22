@@ -1,0 +1,6 @@
+xlwings
+pandas
+pyarrow
+openpyxl
+argparse
+pytz

@@ -1,6 +1,6 @@
 import awsgi
 import random
-import product_manager
+from product_manager import ProductManager
 from dbconn import DBConn
 from flask_cors import CORS
 from flask import Flask, jsonify, request
@@ -9,10 +9,11 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 dbconn = DBConn()
 CORS(app)
+pm = ProductManager()
 
 @app.route("/api/products/total-count", methods=["GET"])
 def get_product_count():
-    return jsonify(product_manager.get_product_count())
+    return jsonify(pm.get_product_count())
 
 @app.route("/api/products/get-random-products/<quantity>", methods=["GET"])
 def get_random_products(quantity: int = 0):
@@ -62,7 +63,7 @@ def get_products_not(collection: str, quantity: int):
 
 @app.route("/api/products/get-collections", methods=["GET"])
 def get_collections():
-    return jsonify(product_manager.get_collections())
+    return jsonify(pm.get_collections())
 
 def lambda_handler(event, context):
     return awsgi.response(app, event, context)

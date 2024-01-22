@@ -42,7 +42,8 @@ API_ENDPOINT=[Your Server Endpoint (or local: http://127.0.0.1:8080)]
  1. Open a new terminal
  2. Navigate to the server directory (```cd server```)
  3. Connect to the virtual environment with ```.\venv\Scripts\activate``` (for Windows)
- 4. Run the Product Manager with ```python .\product-manager.py```
+ 4. Install the Product Manager requirements with ```pip install -r pm-reqs.txt```
+ 5. Run the Product Manager with ```python .\product-manager.py```
 
  Once the Product Manager has started, you can type ```help``` to get all available commands
 
