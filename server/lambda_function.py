@@ -63,7 +63,7 @@ def get_products_not(collection: str, quantity: int):
 
 @app.route("/api/products/get-collections", methods=["GET"])
 def get_collections():
-    return jsonify(pm.get_collections())
+    return jsonify(pm.get_all_collections())
 
 def lambda_handler(event, context):
     return awsgi.response(app, event, context)

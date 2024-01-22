@@ -38,12 +38,33 @@ API_ENDPOINT=[Your Server Endpoint (or local: http://127.0.0.1:8080)]
  6. Go to [https://localhost:3000](https://localhost:3000) to see the live local site
 
  ### How to use the Product Manager
- The Product Manager is included with the server files, and some of the lambda logic requires the Product Manager for code simplicity. To ues the Product Manager, follow these steps:
+ The Product Manager is included with the server files, and some of the lambda logic requires the Product Manager for code simplicity. 
+ To set up the Product Manager (Direct or Visualizer mode) follow the following steps:
+ 1. Follow the steps in this [guide](https://developers.google.com/workspace/guides/create-project) to create a project.
+ 2. In the left-side menu, go to APIs & Services
+ 3. Select Enable APIs And Services
+ 4. Locate the Google Drive API and enable it
+ 5. In the left-side menu, go to IAM & Admin
+ 6. Go to Service Accounts
+ 7. Select Create Service Account
+ 8. Enter the Service Account details (Account name, permissions, etc.)
+ 9. On the newly created service account, click the three dots, and select Manage keys
+ 10. Add a key, and choose JSON mode.
+ 11. Take the JSON from the newly created key, and save it to your .env file as shown:
+ ```
+ ATLAS_URI=[Your MongoDB Endpoint]
+API_ENDPOINT=[Your Server Endpoint]
+CREDENTIALS='[Your Service Account Credentials Here]'
+ ```
+12. Now, you should be all set to use the Product Manager!
+ 
+ To use the Product Manager, follow these steps:
  1. Open a new terminal
  2. Navigate to the server directory (```cd server```)
  3. Connect to the virtual environment with ```.\venv\Scripts\activate``` (for Windows)
  4. Install the Product Manager requirements with ```pip install -r pm-reqs.txt```
  5. Run the Product Manager with ```python .\product-manager.py```
+ 6. To run the Product Manager without the Excel interface, do ```python .\product-manager.py -d```
 
  Once the Product Manager has started, you can type ```help``` to get all available commands
 
