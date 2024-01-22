@@ -43,12 +43,15 @@ jobs:
         cd server/.dependencies
         zip -r ../deployment.zip .
         cd ../
-        zip -r deployment.zip * -x .dependencies
+        zip -r deployment.zip * -x .dependencies -x product-manager.xlsm
+
+    - name: Upload to S3
+      run: |
+        cd server
+        aws s3 cp deployment.zip s3://${{ secrets.AWS_S3_BUCKET }}/deployment.zip
 
     - name: Deploy to AWS Lambda
       run: |
-        # Deploy the function to AWS Lambda
-        cd server
-        aws lambda update-function-code --function-name ArcticDesignsLambda --zip-file fileb://deployment.zip
+        aws lambda update-function-code --function-name ArcticDesignsLambda --s3-bucket ${{ secrets.AWS_S3_BUCKET }} --s3-key deployment.zip
 
     
