@@ -40,17 +40,13 @@ def get_amount_from_collection(collection: str, quantity: int):
 
 @app.route("/api/misc-data/available-colors", methods=["GET"])
 def get_available_colors():
-    colors = dbconn.get_doc("products", "misc_data", "659e165de751f017ecdcc0af")['colors']
+    colors = dbconn.get_doc("products", "misc_data", "000001")['colors']
     return jsonify(colors)
 
 @app.route("/api/products/get-user-recommended-item", methods=["GET"])
 def get_recommended_item():
     products = get_random_products()
     return jsonify(products.json[0])
-
-@app.route("/api/products/get-collections", methods=["GET"])
-def get_collections():
-    return jsonify(product_manager.get_all_collections())
 
 @app.route("/api/products/get-products-not/<collection>/<quantity>", methods=["POST"])
 def get_products_not(collection: str, quantity: int):
@@ -63,6 +59,10 @@ def get_products_not(collection: str, quantity: int):
             products.append({key: product[key] for key in product if key != "_id"})
     random.shuffle(products)
     return jsonify(products[:int(quantity)] if int(quantity) > 0 else products)
+
+@app.route("/api/products/get-collections", methods=["GET"])
+def get_collections():
+    return jsonify(product_manager.get_collections())
 
 def lambda_handler(event, context):
     return awsgi.response(app, event, context)

@@ -51,6 +51,8 @@
 .product-image {
     border-radius: 1rem;
     box-shadow: 1px 1px 3px #102542;
+    width: 100%;
+    height: auto;
 }
 
 .star-rating {

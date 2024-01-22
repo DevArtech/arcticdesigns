@@ -87,7 +87,7 @@ function CollectionsModal(props: CollectionsModalProps) {
             let allCollections = {};
             let collectionCardIDs = {}
             for (let i = 0; i < collections.length; i++) {
-                const productsResponse = await fetch(url(`/api/products/${collections[i]}/6`), responseHeader);
+                const productsResponse = await fetch(url(`/api/products/${collections[i].toLowerCase()}/6`), responseHeader);
                 const products = await productsResponse.json();
                 let mappedProductCards = products.map((product: {prod_id: string, name: string, images: string[], price: number, rating: number, redirect: string, colors: string[]}) => {
                     let collection = []
@@ -137,7 +137,7 @@ function CollectionsModal(props: CollectionsModalProps) {
                 },
                 body: JSON.stringify(cardIDs[selectedCollection])
             }
-            const productsResponse = await fetch(url(`/api/products/get-products-not/${selectedCollection}/6`), responseHeader);
+            const productsResponse = await fetch(url(`/api/products/get-products-not/${selectedCollection.toLowerCase()}/6`), responseHeader);
             const products = await productsResponse.json();
             let newCollectionCardIDs = { ...cardIDs };
             let newAllCollections = { ...collectionCards };

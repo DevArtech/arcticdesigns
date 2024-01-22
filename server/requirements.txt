@@ -3,3 +3,9 @@ Pymongo
 python-dotenv
 aws-wsgi
 Flask-Cors
+xlwings
+pandas
+pyarrow
+openpyxl
+argparse
+pytz

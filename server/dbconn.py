@@ -25,7 +25,7 @@ class DBConn:
         return self.client[db_name][collection_name].find({})
     
     def get_doc(self, db_name: str, collection_name: str, doc_id: str):
-        return self.client[db_name][collection_name].find_one({'prod_id': ObjectId(doc_id)})
+        return self.client[db_name][collection_name].find_one({'prod_id': doc_id})
     
     def find_one(self, db_name: str, collection_name: str, regex: Dict[str, str]):
         return self.client[db_name][collection_name].find_one(regex)
