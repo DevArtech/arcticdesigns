@@ -40,23 +40,25 @@ API_ENDPOINT=[Your Server Endpoint (or local: http://127.0.0.1:8080)]
  ### How to use the Product Manager
  The Product Manager is included with the server files, and some of the lambda logic requires the Product Manager for code simplicity. 
  To set up the Product Manager (Direct or Visualizer mode) follow the following steps:
- 1. Follow the steps in this [guide](https://developers.google.com/workspace/guides/create-project) to create a project.
- 2. In the left-side menu, go to APIs & Services
- 3. Select Enable APIs And Services
- 4. Locate the Google Drive API and enable it
- 5. In the left-side menu, go to IAM & Admin
- 6. Go to Service Accounts
- 7. Select Create Service Account
- 8. Enter the Service Account details (Account name, permissions, etc.)
- 9. On the newly created service account, click the three dots, and select Manage keys
- 10. Add a key, and choose JSON mode.
- 11. Take the JSON from the newly created key, and save it to your .env file as shown:
+ 1. Navigate to the server folder, and run the virtual enviornment.
+ 2. Run ```pip install -r pm-reqs.txt```
+ 3. Follow the steps in this [guide](https://developers.google.com/workspace/guides/create-project) to create a project.
+ 4. In the left-side menu, go to APIs & Services
+ 5. Select Enable APIs And Services
+ 6. Locate the Google Drive API and enable it
+ 7. In the left-side menu, go to IAM & Admin
+ 8. Go to Service Accounts
+ 9. Select Create Service Account
+ 10. Enter the Service Account details (Account name, permissions, etc.)
+ 11. On the newly created service account, click the three dots, and select Manage keys
+ 12. Add a key, and choose JSON mode.
+ 13. Take the JSON from the newly created key, and save it to your .env file as shown:
  ```
  ATLAS_URI=[Your MongoDB Endpoint]
 API_ENDPOINT=[Your Server Endpoint]
 CREDENTIALS='[Your Service Account Credentials Here]'
  ```
-12. Now, you should be all set to use the Product Manager!
+14. Now, you should be all set to use the Product Manager!
  
  To use the Product Manager, follow these steps:
  1. Open a new terminal
