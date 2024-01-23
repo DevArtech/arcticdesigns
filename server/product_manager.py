@@ -113,15 +113,17 @@ if __name__ == "__main__":
         folder.Upload()
         folder_id = folder['id']
 
-        for i, file_name in enumerate(os.listdir(f"./images/")):
-            if os.path.isdir(os.path.join("./images/", file_name)):
-                for j, nested_file_name in enumerate(os.listdir(os.path.join("./images/", name))):
+        for i, item in enumerate(os.listdir("./images")):
+            item_path = os.path.join("./images", item)
+            if os.path.isdir(item_path):
+                for j, file in enumerate(os.listdir(item_path)):
+                    file_path = os.path.join(item_path, file)
                     file = drive.CreateFile({'title': j, 'parents': [{'id': folder_id}]})
-                    file.SetContentFile(f'./images/{name}/{nested_file_name}')
+                    file.SetContentFile(file_path)
                     file.Upload()
             else:
                 file = drive.CreateFile({'title': i, 'parents': [{'id': folder_id}]})
-                file.SetContentFile(f'./images/{file_name}')
+                file.SetContentFile(f'./images/{item}')
                 file.Upload()
 
         image_links = []
