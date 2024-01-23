@@ -103,7 +103,7 @@ if __name__ == "__main__":
             hasher.update(buf)
         return hasher.hexdigest()
     
-    def _upload_images_to_drive(prod_id):
+    def _upload_images_to_drive(prod_id: str, name: str):
         file_metadata = {
             'title': prod_id,
             'mimeType': 'application/vnd.google-apps.folder'
@@ -114,9 +114,15 @@ if __name__ == "__main__":
         folder_id = folder['id']
 
         for i, file_name in enumerate(os.listdir(f"./images/")):
-            file = drive.CreateFile({'title': i, 'parents': [{'id': folder_id}]})
-            file.SetContentFile(f'./images/{file_name}')
-            file.Upload()
+            if os.path.isdir(os.path.join("./images/", file_name)):
+                for j, nested_file_name in enumerate(os.listdir(os.path.join("./images/", name))):
+                    file = drive.CreateFile({'title': j, 'parents': [{'id': folder_id}]})
+                    file.SetContentFile(f'./images/{name}/{nested_file_name}')
+                    file.Upload()
+            else:
+                file = drive.CreateFile({'title': i, 'parents': [{'id': folder_id}]})
+                file.SetContentFile(f'./images/{file_name}')
+                file.Upload()
 
         image_links = []
         file_list = drive.ListFile({'q': f"'{folder_id}' in parents and trashed=false"}).GetList()
@@ -128,7 +134,10 @@ if __name__ == "__main__":
             })
             match = re.search(r'https://drive\.google\.com/file/d/(.*?)/view\?usp=drivesdk', file['alternateLink'])
             file_id = match.group(1)
-            image_links.append(f"https://drive.google.com/thumbnail?id={file_id}&sz=w700")
+            if file["title"].split(".")[0] == "0":
+                image_links = [f"https://drive.google.com/thumbnail?id={file_id}&sz=w700"] + image_links
+            else:
+                image_links.append(f"https://drive.google.com/thumbnail?id={file_id}&sz=w700")
         
         return image_links
     
@@ -178,7 +187,7 @@ if __name__ == "__main__":
                 colors.append(color)
         input("Upload images to ./images and press enter when ready") if images is False else ""
         prod_id = str(uuid.uuid4()) + "-" + str(int(time.time_ns()))
-        images = _upload_images_to_drive(prod_id)
+        images = _upload_images_to_drive(prod_id, name)
         product = {
             "prod_id" : prod_id,
             "name" : name,
@@ -201,7 +210,14 @@ if __name__ == "__main__":
     def _update_product(prod_id: str = None, update: Dict[str, any] = None):
         prod_id = input("Enter a Product ID: ") if prod_id is None else prod_id
         product = pm._check_if_exists(prod_id) 
-        if product:
+        if list(update.keys())[0] == "collection":
+            product = pm.get_product(prod_id)
+            collection = pm._locate_product_collection(prod_id)
+            delete_result = pm.dbconn.delete_one("products", collection, prod_id)
+            add_result = pm.dbconn.insert_doc("products", update["collection"], product)
+            if add_result.acknowledged and delete_result.acknowledged:
+                return "Product updated"
+        elif product:
             collection = pm._locate_product_collection(prod_id)
             key = input("Key to update: ") if update is None else list(update.keys())[0]
             value = input("New value: ") if update is None else update[key]
@@ -252,6 +268,7 @@ if __name__ == "__main__":
         return "\n\n".join(str(product) for product in products)
 
     def _update_workbook():
+        # Setup workbook
         app = xw.App(visible=False)
         workbook = xw.Book("./product-manager.xlsm")
         worksheet = workbook.sheets[0]
@@ -307,6 +324,9 @@ if __name__ == "__main__":
     }
 
     if not args.direct:
+        # Kill the workbook so it can be updated
+        subprocess.call("TASKKILL /F /IM excel.exe", shell=True)
+
         # Update workbook with latest data
         _update_workbook()
         absolute_file_path = os.path.abspath("./product-manager.xlsm")
@@ -359,70 +379,78 @@ if __name__ == "__main__":
                     else:
                         # Check if the product is different than the one in the database, and update it accordingly 
                         product = pm.get_product(row["Product ID"])
+                        collection = pm._locate_product_collection(row["Product ID"])
                         changes = f"Total Changes for {row['Product ID']}: "
+
+                        # Update collection
+                        if collection != row["Collection"]:
+                            changes += f"Collection: (Old: {collection})"
+                            result = _update_product(row["Product ID"], {"collection": row["Collection"]})
+                            if result == "Product updated":
+                                changes += f" (New: {row['Collection']})"
 
                         # Update name
                         if product["name"] != row["Name"]:
                             changes += f"Name: (Old: {product['name']})"
                             result = _update_product(row["Product ID"], {"name": row["Name"]})
                             if result == "Product updated":
-                                changes += f"(New: {row['Name']})"
+                                changes += f" (New: {row['Name']})"
 
                         # Update description
                         if product["description"] != row["Description"]:
                             changes += f"Description: (Old: {product['description']})"
                             result = _update_product(row["Product ID"], {"description": row["Description"]})
                             if result == "Product updated":
-                                changes += f"(New: {row['Description']})"
+                                changes += f" (New: {row['Description']})"
 
                         # Update colors
                         if product["colors"] != [str(color.strip()).capitalize() for color in row["Colors"].split(",")]:
                             changes += f"Colors: (Old: {product['colors']})"
                             result = _update_product(row["Product ID"], {"colors": [str(color.strip()).capitalize() for color in row["Colors"].split(",")]})
                             if result == "Product updated":
-                                changes += f"(New: {[str(color.strip()).capitalize() for color in row['Colors'].split(',')]})"
+                                changes += f" (New: {[str(color.strip()).capitalize() for color in row['Colors'].split(',')]})"
 
                         # Update price
                         if product["price"] != int(row["Price"] * 100):
                             changes += f"Price: (Old: {product['price']})"
                             result = _update_product(row["Product ID"], {"price": int(row["Price"] * 100)})
                             if result == "Product updated":
-                                changes += f"(New: {row['Price']})"
+                                changes += f" (New: {row['Price']})"
 
                         # Update tags
                         if product["tags"] != [str(tag.strip()) for tag in row["Tags"].split(",")]:
                             changes += f"Tags: (Old: {product['tags']})"
                             result = _update_product(row["Product ID"], {"tags": [str(tag.strip()) for tag in row["Tags"].split(",")]})
                             if result == "Product updated":
-                                changes += f"(New: {[str(tag.strip()) for tag in row['Tags'].split(',')]})"
+                                changes += f" (New: {[str(tag.strip()) for tag in row['Tags'].split(',')]})"
 
                         # Update images
                         if product["images"] != [str(image.strip()) for image in row["Images"].split(",")]:
                             changes += f"Images: (Old: {product['images']})"
                             result = _update_product(row["Product ID"], {"images": [str(image.strip()) for image in row["Images"].split(",")]})
                             if result == "Product updated":
-                                changes += f"(New: {[str(image.strip()) for image in row['Images'].split(',')]})"
+                                changes += f" (New: {[str(image.strip()) for image in row['Images'].split(',')]})"
 
                         # Update rating
                         if product["rating"] != row["Rating"]:
                             changes += f"Rating: (Old: {product['rating']})"
                             result = _update_product(row["Product ID"], {"rating": row["Rating"]})
                             if result == "Product updated":
-                                changes += f"(New: {row['Rating']})"
+                                changes += f" (New: {row['Rating']})"
 
                         # Update date added
                         if product["date-added"] != row["Date Added"]:
                             changes += f"Date Added: (Old: {product['date-added']})"
                             result = _update_product(row["Product ID"], {"date-added": row["Date Added"]})
                             if result == "Product updated":
-                                changes += f"(New: {row['Date Added']})"
+                                changes += f" (New: {row['Date Added']})"
 
                         # Update comments
                         if not pd.isna(row["Comments"]) and product["comments"] != [str(comment.strip()) for comment in row["Comments"].split(",")]:
                             changes += f"Comments: (Old: {product['comments']})"
                             result = _update_product(row["Product ID"], {"comments": [str(comment.strip()) for comment in row["Comments"].split(",")]})
                             if result == "Product updated":
-                                changes += f"(New: {[str(comment.strip()) for comment in row['Comments'].split(',')]})"
+                                changes += f" (New: {[str(comment.strip()) for comment in row['Comments'].split(',')]})"
 
                         # Print any updates
                         if changes != f"Total Changes for {row['Product ID']}: ":
