@@ -160,12 +160,10 @@ function CollectionsModal(props: CollectionsModalProps) {
                         largeCard={false}
                         popProductAdded={props.popProductAdded}/>
             });
-            for(let i = 0; i < mappedProductCards.length; i++) {
-                newAllCollections[selectedCollection] = [
-                    ...newAllCollections[selectedCollection],
-                    ...mappedProductCards
-                ];
-            }
+            newAllCollections[selectedCollection] = [
+                ...newAllCollections[selectedCollection],
+                ...mappedProductCards
+            ];
             setCardIDs(newCollectionCardIDs);
             setCollectionCards(newAllCollections);
             setLoading(false);
