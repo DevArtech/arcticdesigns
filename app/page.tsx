@@ -8,7 +8,7 @@ import './css/fira-sans.css'
 import './css/globals.css'
 import './css/header.module.css'
 import CollectionsModal from './CollectionsModal';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductPage from './ProductPage';
 
 function Page() {
@@ -41,7 +41,10 @@ function Page() {
               </>
             } />
             <Route path="/product/:productID" element={
-              <ProductPage userData={userData} popProductAdded={popProductAdded}/>
+              <>
+                <ProductPage userData={userData} popProductAdded={popProductAdded}/>
+                <CollectionsModal popProductAdded={popProductAdded} />
+              </>
             }/>
           </Routes>
         </Router>

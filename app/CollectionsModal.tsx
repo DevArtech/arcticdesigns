@@ -5,6 +5,12 @@ import { useState, useRef, useEffect } from 'react';
 import ProductCard from './ProductCard';
 import AvailableColor from './utils/availablecolors';
 import LoadingSpinner from './LoadingSpinner';
+import { useParams } from 'react-router-dom';
+
+interface RouteParams {
+    productID: string;
+    [key: string]: string;
+}
 
 interface ProductCardProps {
     id: string;
@@ -24,7 +30,8 @@ interface CollectionsModalProps {
 }
 
 function CollectionsModal(props: CollectionsModalProps) {
-
+    const { productID } = useParams<RouteParams>();
+    const [onProductPage, isOnProductPage] = useState(false);
     const [selectedCollection, setSelectedCollection] = useState('');
     const [collections, setCollections] = useState([]);
     const [collectionCards, setCollectionCards] = useState({});
@@ -34,6 +41,26 @@ function CollectionsModal(props: CollectionsModalProps) {
     const [availableColors, setAvailableColors] = useState<AvailableColor[]>();
     const [loading, setLoading] = useState(true);
     const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
+
+    useEffect(() => {
+        async function checkForUpdates() {
+            if(productID) {
+                const responseHeader =  {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+                const collectionResponse = await fetch(url(`/api/products/get-product-collection/${productID}`), responseHeader)
+                const collection = await collectionResponse.json();
+                setSelectedCollection(collection);
+                isOnProductPage(true);
+            } else {
+                isOnProductPage(false);
+            }
+        }
+        checkForUpdates()
+    }, [productID])
     
     const handleOptionClick = (option: string) => {
         setSelectedCollection(option);
@@ -116,7 +143,13 @@ function CollectionsModal(props: CollectionsModalProps) {
                 allCollections[collections[i]] = mappedProductCards;
             }
             setCollections(collections);
-            setSelectedCollection(collections[0]);
+            if(productID == undefined) {
+                setSelectedCollection(collections[0]);
+            } else {
+                const collectionResponse = await fetch(url(`/api/products/get-product-collection/${productID}`), responseHeader)
+                const collection = await collectionResponse.json();
+                setSelectedCollection(collection);
+            }
             setCardIDs(collectionCardIDs);
             setAvailableColors(currentAvailableColors);
             setLoading(false);
@@ -174,26 +207,30 @@ function CollectionsModal(props: CollectionsModalProps) {
     return (
         <div className={styles["collections-modal"]}>
             <fieldset className={styles["collections-field"]}>
-                <legend className={styles["collections-legend"]}>
-                    <div style={{display: "flex", gap: "0.5rem"}}>
-                        <p>Sort by Collection</p>
-                        <div style={{display: 'relative'}}>
-                            <button onClick={handleToggleClick} ref={toggleButtonRef} className={styles["dropdown-toggle"]}> {selectedCollection.charAt(0).toUpperCase() + selectedCollection.slice(1)}
-                                {
-                                    isOpen ? <div style={{position: "absolute", right: "0.35em", top: "0.55em"}}>⌃</div> : <div style={{position: "absolute", right: "0.35em", top: "0.15em"}}>⌄</div>
+                <legend className={styles["collections-legend"]}> { onProductPage ? <p>More from Collection</p> :
+                        <div style={{display: "flex", gap: "0.5rem"}}>
+                            <p>Sort by Collection</p>
+                            <div style={{display: 'relative'}}>
+                                <button onClick={handleToggleClick} ref={toggleButtonRef} className={styles["dropdown-toggle"]}> 
+                                    {
+                                        selectedCollection.charAt(0).toUpperCase() + selectedCollection.slice(1)
+                                    }
+                                    {
+                                        isOpen ? <div style={{position: "absolute", right: "0.35em", top: "0.55em"}}>⌃</div> : <div style={{position: "absolute", right: "0.35em", top: "0.15em"}}>⌄</div>
+                                    }
+                                </button>
+                                {isOpen &&
+                                    <ul className={styles["dropdown-menu"]}>
+                                        {collections.map((option, index) => (
+                                            <li onClick={() => handleOptionClick(option)} key={index}>
+                                                {option.charAt(0).toUpperCase() + option.slice(1)}
+                                            </li>
+                                        ))}
+                                    </ul>
                                 }
-                            </button>
-                            {isOpen &&
-                                <ul className={styles["dropdown-menu"]}>
-                                    {collections.map((option, index) => (
-                                        <li onClick={() => handleOptionClick(option)} key={index}>
-                                            {option.charAt(0).toUpperCase() + option.slice(1)}
-                                        </li>
-                                    ))}
-                                </ul>
-                            }
+                            </div>
                         </div>
-                    </div>
+                    }
                 </legend>
                 <div className={styles["collection-display"]}>{ collectionCards[selectedCollection] }</div>
                 <div style={{width: '100%', display: 'flex', justifyContent: 'center', margin: '0 0 0.75rem 0'}}>

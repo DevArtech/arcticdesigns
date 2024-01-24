@@ -71,8 +71,7 @@ function ProductPage(props: ProductPageProps) {
         minutes = minutes.length < 2 ? '0' + minutes : minutes;
     
         return `${month}/${day}/${year} - ${hoursStr}:${minutes} ${ampm}`;
-    }
-    
+    } 
     
     useEffect(() => {
         async function fetchData() {
@@ -189,30 +188,27 @@ function ProductPage(props: ProductPageProps) {
                     setErrorAddingComment(false);
                 }, 3000);
             });
-    };    
+    }; 
   
     return (
         <div id="product" className={styles["page-fade"]}>
             { productData &&
                 <div className={styles["product-page"]}>
                     <Carousel 
-                    containerClass={styles["product-images"]} 
+                    containerClass={styles["product-images"]}
                     responsive={responsive}
                     infinite={true}
                     showDots={true}
                     removeArrowOnDeviceType={["tablet", "mobile"]}>
                         { productData.images }
                     </Carousel>
-                    <div className={styles["left-side-padding"]}/>
+                    {/* <div className={styles["left-side-padding"]}/> */}
                     <div className={styles["right-product-info"]}>
                         {StarRating(productData.rating)}
                         <p className={styles["product-name"]}>{productData.name}</p>
                         <p className={styles["product-price"]}>${(productData.price / 100).toFixed(2)}</p>
                         <p className={styles["product-description"]} dangerouslySetInnerHTML={{__html: convertLinksToAnchors(productData.description)}}/>
                         <p className={styles["product-date-added"]}>Added: {productData["date-added"].slice(0, -4)}</p>
-                        <div className={styles["tags-container"]}>
-                            { productData.tags }
-                        </div>
                         <div className={styles["product-options"]}>
                             <ColorSelector
                                 id={productData.prod_id}
@@ -234,6 +230,9 @@ function ProductPage(props: ProductPageProps) {
                                 </svg>
                                 <p style={{width: "45%"}}>Add to Cart</p>
                             </button>
+                        </div>
+                        <div className={styles["tags-container"]}>
+                            { productData.tags }
                         </div>
                         <div className={styles["comments"]}>
                             <form onSubmit={handleSubmit} className={styles["add-comment"]}>

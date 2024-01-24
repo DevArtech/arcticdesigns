@@ -83,6 +83,10 @@ def get_product(product_id: str):
     product["comments"] = product["comments"][::-1]
     return jsonify({key: product[key] for key in product if key != "_id"})
 
+@app.route("/api/products/get-product-collection/<product_id>", methods=["GET"])
+def get_product_collection(product_id: str):
+    return jsonify(pm.locate_product_collection(product_id))
+
 def lambda_handler(event, context):
     return awsgi.response(app, event, context)
 
