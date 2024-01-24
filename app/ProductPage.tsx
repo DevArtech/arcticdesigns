@@ -75,6 +75,7 @@ function ProductPage(props: ProductPageProps) {
     
     useEffect(() => {
         async function fetchData() {
+            window.scrollTo(0, 0);
             const headerObject = {
                 method: 'GET',
                 headers: {
