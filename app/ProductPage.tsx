@@ -120,10 +120,10 @@ function ProductPage(props: ProductPageProps) {
                     responsive={responsive}
                     infinite={true}
                     showDots={true}
-
                     removeArrowOnDeviceType={["tablet", "mobile"]}>
                         { productData.images }
                     </Carousel>
+                    <div className={styles["left-side-padding"]}/>
                     <div className={styles["right-product-info"]}>
                         {StarRating(productData.rating)}
                         <p className={styles["product-name"]}>{productData.name}</p>

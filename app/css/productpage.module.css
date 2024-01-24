@@ -15,6 +15,8 @@
     width: 30rem;
     height: 30rem;
     border-radius: 1rem;
+    position: fixed;
+    left: 6.5rem;
 }
 
 .product-image {
@@ -23,11 +25,13 @@
     object-fit: cover;
 }
 
+.left-side-padding {
+    width: 30rem;
+    height: 30rem;
+}
+
 .right-product-info {
     width: 30rem;
-    height: 80vh;
-    overflow-y: auto;
-    scrollbar-width: thin;
     padding-right: 1em;
 }
 
@@ -182,4 +186,5 @@
     justify-content: center;
     align-items: center;
     color: #646969;
+    padding-bottom: 1rem;
 }
