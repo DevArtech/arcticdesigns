@@ -78,7 +78,7 @@ function ProductPage(props: ProductPageProps) {
             })
             const comments = productData.comments[0] == undefined ?
                 <div className={styles["no-comments"]}> 
-                    <img style={{width: "5rem", height: "auto"}} src="./pikachu.svg" alt="" />
+                    <img style={{width: "5rem", height: "auto"}} src="../pikachu.svg" alt="" />
                     Wow! No comments available
                 </div> : productData.comments.map((comment, index) => {
                 return (

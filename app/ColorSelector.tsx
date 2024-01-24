@@ -56,7 +56,7 @@ const ColorSelector = (props: DropdownProps) => {
 
     return (
         <div className={styles["color-selector"]}>
-            <button onClick={handleToggleClick} ref={toggleButtonRef} className={styles["dropdown-toggle"]}><div style={{backgroundImage : `url("./colors/${props.selectedColor.toLowerCase()}.png")`, backgroundSize: "cover", boxShadow : props.selectedColor.toLowerCase() == "glow" ? "0 0 5px 3px rgba(0, 123, 155, 1)" : ""}} className={styles["color-preview"]}/>
+            <button onClick={handleToggleClick} ref={toggleButtonRef} className={styles["dropdown-toggle"]}><div style={{backgroundImage : `url("../colors/${props.selectedColor.toLowerCase()}.png")`, backgroundSize: "cover", boxShadow : props.selectedColor.toLowerCase() == "glow" ? "0 0 5px 3px rgba(0, 123, 155, 1)" : ""}} className={styles["color-preview"]}/>
             <div id={`selectedColor${props.id}`} className={`${styles["dropdown-value"]} ${props.isLargeCard ? styles["large-card"] : ""}`}>{props.selectedColor}</div>
             {
                 isOpen ? <div style={{position: "absolute", right: "0.35em", top: "0.55em"}}>⌃</div> : <div style={{position: "absolute", right: "0.35em", top: "0.15em"}}>⌄</div>
