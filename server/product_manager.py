@@ -46,7 +46,7 @@ class ProductManager():
             if document:
                 return document
             
-    def _locate_product_collection(self, prod_id: str) -> str:
+    def locate_product_collection(self, prod_id: str) -> str:
         collections = self.get_all_collections()
         for collection in collections:
             document = self.dbconn.find_one("products", collection, {"prod_id" : prod_id})
@@ -214,13 +214,13 @@ if __name__ == "__main__":
         product = pm._check_if_exists(prod_id) 
         if list(update.keys())[0] == "collection":
             product = pm.get_product(prod_id)
-            collection = pm._locate_product_collection(prod_id)
+            collection = pm.locate_product_collection(prod_id)
             delete_result = pm.dbconn.delete_one("products", collection, prod_id)
             add_result = pm.dbconn.insert_doc("products", update["collection"], product)
             if add_result.acknowledged and delete_result.acknowledged:
                 return "Product updated"
         elif product:
-            collection = pm._locate_product_collection(prod_id)
+            collection = pm.locate_product_collection(prod_id)
             key = input("Key to update: ") if update is None else list(update.keys())[0]
             value = input("New value: ") if update is None else update[key]
             value_type = input("Value type: ") if update is None else ""
@@ -242,7 +242,7 @@ if __name__ == "__main__":
         
     def _remove_product(prod_id: str = None):
         prod_id = input("Enter a Product ID: ") if prod_id is None else prod_id
-        collection = pm._locate_product_collection(prod_id)
+        collection = pm.locate_product_collection(prod_id)
         result = pm.dbconn.delete_one("products", collection, prod_id)
         _remove_product_images_from_drive(prod_id)
         if result.acknowledged:
@@ -303,7 +303,7 @@ if __name__ == "__main__":
                 # Rating
                 worksheet.range(f'K{i}').value = product["rating"]
                 # Comments
-                worksheet.range(f'L{i}').value = ",".join(product["comments"])
+                worksheet.range(f'L{i}').value = json.dumps(product["comments"])
                 i += 1
 
         # Save the workbook
@@ -381,7 +381,7 @@ if __name__ == "__main__":
                     else:
                         # Check if the product is different than the one in the database, and update it accordingly 
                         product = pm.get_product(row["Product ID"])
-                        collection = pm._locate_product_collection(row["Product ID"])
+                        collection = pm.locate_product_collection(row["Product ID"])
                         changes = f"Total Changes for {row['Product ID']}: "
 
                         # Update collection
@@ -448,11 +448,11 @@ if __name__ == "__main__":
                                 changes += f" (New: {row['Date Added']})"
 
                         # Update comments
-                        if not pd.isna(row["Comments"]) and product["comments"] != [str(comment.strip()) for comment in row["Comments"].split(",")]:
+                        if not pd.isna(row["Comments"]) and product["comments"] != json.loads(row["Comments"]):
                             changes += f"Comments: (Old: {product['comments']})"
-                            result = _update_product(row["Product ID"], {"comments": [str(comment.strip()) for comment in row["Comments"].split(",")]})
+                            result = _update_product(row["Product ID"], {"comments": json.loads(row["Comments"])})
                             if result == "Product updated":
-                                changes += f" (New: {[str(comment.strip()) for comment in row['Comments'].split(',')]})"
+                                changes += f" (New: {json.loads(row['Comments'])})"
 
                         # Print any updates
                         if changes != f"Total Changes for {row['Product ID']}: ":

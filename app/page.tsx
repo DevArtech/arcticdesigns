@@ -14,6 +14,7 @@ import ProductPage from './ProductPage';
 function Page() {
   const [isClient, setIsClient] = useState(false);
   const [productAddedData, setProductAddedData] = useState(undefined);
+  const [userData, setUserData] = useState();
 
   useEffect(() => {
     document.title = 'Arctic Designs';
@@ -40,7 +41,7 @@ function Page() {
               </>
             } />
             <Route path="/product/:productID" element={
-              <ProductPage popProductAdded={popProductAdded}/>
+              <ProductPage userData={userData} popProductAdded={popProductAdded}/>
             }/>
           </Routes>
         </Router>

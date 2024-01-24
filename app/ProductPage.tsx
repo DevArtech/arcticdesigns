@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { url } from './config/utils';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import styles from "./css/productpage.module.css";
 import Carousel from 'react-multi-carousel';
 import DOMPurify from 'dompurify';
@@ -14,13 +14,16 @@ interface RouteParams {
 
 interface ProductPageProps {
     popProductAdded(data: {name: string, image: string, color: string}): void;
+    userData: {name: string}
 }
 
 function ProductPage(props: ProductPageProps) {
     const { productID } = useParams<RouteParams>();
     const [selectedColor, setSelectedColor] = useState('');
+    const [inputValue, setInputValue] = useState<string>('');
+    const [errorAddingComment, setErrorAddingComment] = useState(false);
     const [availableColors, setAvailableColors] = useState<AvailableColor[]>([]);
-    const [productData, setProductData] = useState<{colors: string[], comments: string[], 
+    const [productData, setProductData] = useState<{colors: string[], comments: any[], 
         dateAdded: string, description: string, images: any[], name: string, price: number, 
         prod_id: string, rating: number, tags: string[]}>();
 
@@ -49,6 +52,27 @@ function ProductPage(props: ProductPageProps) {
             return `<a href="${url}" target="_blank">${url}</a>`;
         });
     }
+
+    function formatDate(dateStr: string): string {
+        const date = new Date(dateStr);
+        let day = date.getDate().toString();
+        let month = (date.getMonth() + 1).toString();
+        let year = date.getFullYear().toString().slice(-2);
+        let hours = date.getHours();
+        let minutes = date.getMinutes().toString();
+    
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        let hoursStr = hours.toString();
+    
+        month = month.length < 2 ? '0' + month : month;
+        day = day.length < 2 ? '0' + day : day;
+        minutes = minutes.length < 2 ? '0' + minutes : minutes;
+    
+        return `${month}/${day}/${year} - ${hoursStr}:${minutes} ${ampm}`;
+    }
+    
     
     useEffect(() => {
         async function fetchData() {
@@ -80,15 +104,17 @@ function ProductPage(props: ProductPageProps) {
                 <div className={styles["no-comments"]}> 
                     <img style={{width: "5rem", height: "auto"}} src="../pikachu.svg" alt="" />
                     Wow! No comments available
-                </div> : productData.comments.map((comment, index) => {
-                return (
-                    <div key={index} className={styles["comment"]}>
-                        <p className={styles["comment-name"]}>{comment.name}</p>
-                        <p className={styles["comment-date"]}>{comment.date}</p>
-                        <p className={styles["comment-text"]}>{comment.text}</p>
-                    </div>
-                )
-                })
+                </div> :
+                productData.comments.map((comment, index) => {
+                    return (
+                        <div key={index} className={styles["comment"]}>
+                            <div style={{display: "flex", alignItems: "center", gap: "0.5rem"}}>
+                                <p className={styles["comment-name"]}>{comment.name}</p>
+                                <p className={styles["comment-date"]}>{formatDate(comment.date)}</p>
+                            </div>
+                            <p className={styles["comment-text"]}>{comment.text}</p>
+                        </div>
+                    )})
             productData.images = images;
             productData.tags = tags;
             productData.comments = comments;
@@ -109,7 +135,61 @@ function ProductPage(props: ProductPageProps) {
             </div>
           </div>
         );
-      };      
+    };     
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value);
+    };
+    
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        if(inputValue === "") {
+            return;
+        }
+        const comment = {
+            name: props.userData.name,
+            text: inputValue,
+            date: new Date().toISOString()
+        };
+        const headerObject = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(comment)
+        };
+        fetch(url(`/api/products/add-comment/${productID.toString()}`), headerObject)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setProductData(prevData => {
+                    return {
+                        ...prevData,
+                        comments: [
+                            <div key={prevData.comments.length} className={styles["comment"]}>
+                                <div style={{display: "flex", alignItems: "center", gap: "0.5rem"}}>
+                                    <p className={styles["comment-name"]}>{comment.name}</p>
+                                    <p className={styles["comment-date"]}>{formatDate(comment.date)}</p>
+                                </div>
+                                <p className={styles["comment-text"]}>{comment.text}</p>
+                            </div>,
+                            ...prevData.comments
+                        ]
+                    };
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                setErrorAddingComment(true);
+                setTimeout(() => {
+                    setErrorAddingComment(false);
+                }, 3000);
+            });
+    };    
   
     return (
         <div id="product" className={styles["page-fade"]}>
@@ -156,6 +236,17 @@ function ProductPage(props: ProductPageProps) {
                             </button>
                         </div>
                         <div className={styles["comments"]}>
+                            <form onSubmit={handleSubmit} className={styles["add-comment"]}>
+                                <input disabled={props.userData == undefined} onChange={handleInputChange} className={styles["comment-input-field"]} placeholder={props.userData != undefined ? "Add a comment..." : "You must be signed in to comment."}></input>
+                                <button className={styles["submit"]} disabled={props.userData == undefined}>
+                                    <svg className={styles["submit-icon"]} viewBox="0 0 256 256">
+                                        <path d="M234.69409,219.61572a15.86649,15.86649,0,0,1-12.15625,5.69141,16.171,16.171,0,0,1-5.44531-.95117l-81.21094-29.00391V120a8,8,0,1,0-16,0v75.352L38.67065,224.356a16.00042,16.00042,0,0,1-19.3418-22.88575l94.5918-168.91455a16.00119,16.00119,0,0,1,27.92188,0l94.59179,168.915A15.87045,15.87045,0,0,1,234.69409,219.61572Z"/>
+                                    </svg>
+                                </button>
+                            </form>
+                            {
+                                errorAddingComment ? <div>There was an error commenting</div> : ""
+                            }
                             {
                                 productData.comments
                             }

@@ -62,6 +62,17 @@ def get_products_not(collection: str, quantity: int):
     random.shuffle(products)
     return jsonify(products[:int(quantity)] if int(quantity) > 0 else products)
 
+@app.route("/api/products/add-comment/<prod_id>", methods=["POST"])
+def add_comment(prod_id: str):
+    collection = pm.locate_product_collection(prod_id)
+    comment = request.json
+    prior_comments = pm.get_product(prod_id)["comments"]
+    if prior_comments is None:
+        prior_comments = []
+    prior_comments.append(comment)
+    result = dbconn.update_one("products", collection, {"prod_id": prod_id}, {"$set": {"comments": prior_comments}})
+    return jsonify({"success": result.acknowledged})
+
 @app.route("/api/products/get-collections", methods=["GET"])
 def get_collections():
     return jsonify(pm.get_all_collections())
@@ -69,6 +80,7 @@ def get_collections():
 @app.route("/api/products/get-product/<product_id>", methods=["GET"])
 def get_product(product_id: str):
     product = pm.get_product(product_id)
+    product["comments"] = product["comments"][::-1]
     return jsonify({key: product[key] for key in product if key != "_id"})
 
 def lambda_handler(event, context):
