@@ -122,6 +122,7 @@ function ProductPage(props: ProductPageProps) {
             const page = document.getElementById("product")
             page.style.opacity = "1";
             page.style.transform = "none";
+            page.style.height = "auto";
         }
         fetchData();
     }, [productID]);
