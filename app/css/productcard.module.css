@@ -32,7 +32,7 @@
     z-index: 10;
 }
 
-.product-card-large > .star-rating {
+.product-card-large > nav > a > .star-rating {
     height: 1.25rem;
 }
 
@@ -111,8 +111,11 @@
 }
 
 .name-container {
-    max-height: 3em;
+    min-height: 3em;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .name {
@@ -122,6 +125,8 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+    height: 100%;
+    text-align: center;
 }
 
 .color-selector {

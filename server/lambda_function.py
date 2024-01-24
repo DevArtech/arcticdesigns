@@ -1,3 +1,4 @@
+import json
 import awsgi
 import random
 from product_manager import ProductManager
@@ -64,6 +65,11 @@ def get_products_not(collection: str, quantity: int):
 @app.route("/api/products/get-collections", methods=["GET"])
 def get_collections():
     return jsonify(pm.get_all_collections())
+
+@app.route("/api/products/get-product/<product_id>", methods=["GET"])
+def get_product(product_id: str):
+    product = pm.get_product(product_id)
+    return jsonify({key: product[key] for key in product if key != "_id"})
 
 def lambda_handler(event, context):
     return awsgi.response(app, event, context)

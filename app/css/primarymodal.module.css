@@ -146,7 +146,7 @@
     position: absolute;
     width: 53vw;
     margin-left: 0;
-    bottom: 0.5rem;
+    bottom: 0rem;
     left: 0;
     z-index: 5;
     row-gap: 5rem;
@@ -170,16 +170,6 @@
     width: 27.5vw;
     margin-left: 0;
     right: 0;
-}
-
-.product-cards button:not(:has(div)):not(:has(svg)) {
-    background-color: #10254280;
-    color: #F7F4F3;
-    backdrop-filter: blur(4px);
-}
-
-.product-cards button:not(:has(div)):not(:has(svg)):hover {
-    background-color: #48B8FE;
 }
 
 .recommended-card {

@@ -84,12 +84,12 @@
     width: calc(100% / 6.225);
 }
 
-.collection-display > div > p {
+.collection-display > div > nav > a > p {
     color: #102542;
     text-shadow: none;
 }
 
-.collection-display > div > div > p {
+.collection-display > div > nav > a > div > p {
     color: #102542;
     text-shadow: none;
 }

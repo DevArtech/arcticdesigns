@@ -109,7 +109,7 @@ function CollectionsModal(props: CollectionsModalProps) {
                             rating={product.rating} 
                             colorOptions={product.colors}
                             availableColors={currentAvailableColors}
-                            redirect={"/"}
+                            redirect={`/product/${product.prod_id}`}
                             largeCard={false}
                             popProductAdded={props.popProductAdded}/>
                 });
@@ -156,7 +156,7 @@ function CollectionsModal(props: CollectionsModalProps) {
                         rating={product.rating} 
                         colorOptions={product.colors}
                         availableColors={availableColors}
-                        redirect={"/"}
+                        redirect={`/product/${product.prod_id}`}
                         largeCard={false}
                         popProductAdded={props.popProductAdded}/>
             });

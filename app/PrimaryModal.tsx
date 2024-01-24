@@ -92,7 +92,7 @@ function PrimaryModal(props: PrimaryModalProps) {
                             rating={product.rating} 
                             colorOptions={product.colors}
                             availableColors={availableColors}
-                            redirect={"/"}
+                            redirect={`/product/${product.prod_id}`}
                             largeCard={false}
                             popProductAdded={props.popProductAdded}/>
                 });
@@ -110,7 +110,7 @@ function PrimaryModal(props: PrimaryModalProps) {
                     rating={recommendedProduct.rating} 
                     colorOptions={recommendedProduct.colors}
                     availableColors={availableColors}
-                    redirect={"/"}
+                    redirect={`/product/${recommendedProduct.prod_id}`}
                     largeCard={true}
                     popProductAdded={props.popProductAdded}/>);
                 setRecommendedLoading(false);
@@ -162,6 +162,7 @@ function PrimaryModal(props: PrimaryModalProps) {
                     containerClass={styles["product-cards"]} 
                     responsive={responsive}
                     infinite={true}
+                    showDots={true}
                     removeArrowOnDeviceType={["tablet", "mobile"]}>
                     { productCards }
                 </Carousel>

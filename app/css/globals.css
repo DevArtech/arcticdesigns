@@ -12,3 +12,26 @@ html, body {
     scroll-behavior: smooth;
 }
 
+.react-multi-carousel-dot-list {
+    bottom: 0.5rem;
+}
+
+.react-multi-carousel-dot--active button {
+    background-color: #48B8FE;
+}
+
+.react-multi-carousel-dot button:hover {
+    background-color: #F7F4F3;
+    z-index: 100;
+}
+
+.react-multiple-carousel__arrow {
+    background-color: #10254280;
+    color: #F7F4F3;
+    backdrop-filter: blur(4px);
+    z-index: 100;
+}
+
+.react-multiple-carousel__arrow:hover {
+    background-color: #48B8FE;
+}
