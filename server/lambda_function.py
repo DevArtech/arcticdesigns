@@ -1,17 +1,169 @@
+import os
 import json
+import time
+import uuid
 import awsgi
 import random
-from product_manager import ProductManager
+import hashlib
+import requests
 from dbconn import DBConn
 from flask_cors import CORS
-from flask import Flask, jsonify, request
+from dotenv import load_dotenv
+from datetime import datetime, timedelta
+from product_manager import ProductManager
+from authlib.integrations.flask_client import OAuth
+from flask import Flask, jsonify, request, url_for, redirect, abort
+load_dotenv()
 
 # App Instance
 app = Flask(__name__)
+oauth = OAuth(app)
 dbconn = DBConn()
 CORS(app)
 pm = ProductManager()
 
+google = oauth.register(
+    name='google',
+    client_id=os.getenv('GOOGLE_CLIENT_ID'),
+    client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'}
+)
+
+app.secret_key = os.getenv('SECRET_KEY')
+
+@app.route('/login/google')
+def login():
+    return google.authorize_redirect(redirect_uri=url_for('authorize', _external=True))
+
+@app.route('/authorize')
+def authorize():
+    code = request.args.get('code', None)
+    if code:
+        token = google.authorize_access_token()
+        url = "https://people.googleapis.com/v1/people/me?personFields=emailAddresses"
+
+        # Set up the headers with the access token
+        headers = {
+            "Authorization": f"Bearer {token['access_token']}",
+            "Accept": "application/json"
+        }
+
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            email_addresses = response.json().get("emailAddresses", [])
+            if email_addresses:
+                return redirect(f"{os.getenv('MAIN_URI')}/#/login?{google_login_user(email_addresses[0]['value'])}")
+            else:
+                return "No email address found"
+        else:
+            return f"Error: {response.status_code}"
+
+    else:
+        abort(400)
+
+def google_login_user(email: str):
+    account = dbconn.get_doc("accounts", "users", {"email": email})
+    need_additional_info = False
+    if not account:
+        account = {
+            "user_id": str(uuid.uuid4()) + "-" + str(int(time.time_ns())),
+            "username": email.split("@")[0],
+            "email": email,
+            "password": "",
+            "salt": os.urandom(16),
+            "previous_orders": [],
+            "login_token": "",
+            "token_expiration": ""
+        }
+        need_additional_info = True
+        dbconn.insert_doc("accounts", "users", account)
+
+    token = str(uuid.uuid4()) + "-" + str(int(time.time_ns()))
+    expiration = (datetime.now() + timedelta(minutes=(10 if need_additional_info else 1440))).strftime("%Y-%m-%d %H:%M:%S")
+    dbconn.update_one("accounts", "users", {"email": email}, {"$set": {"login_token": token, "token_expiration": expiration}})
+
+    return f"user={account['username']}&need-add-info={need_additional_info}&token={token}"
+
+@app.route("/api/accounts/signup", methods=["POST"])
+def signup_user():
+    username = request.json["username"]
+    email = request.json["email"]
+    password = request.json["password"]
+    salt = os.urandom(16)
+    check_if_user_exists = dbconn.get_doc("accounts", "users", {"email": email})
+    if check_if_user_exists:
+        abort(400)
+
+    check_if_user_taken = dbconn.get_doc("accounts", "users", {"username": username})
+    if check_if_user_taken:
+        abort(409)
+
+    salted_password = salt + password.encode()
+    hash_obj = hashlib.sha256(salted_password)
+    hashed_password = hash_obj.hexdigest()
+
+    account = {
+        "user_id": str(uuid.uuid4()) + "-" + str(int(time.time_ns())),
+        "username": username,
+        "email": email,
+        "password": hashed_password,
+        "salt": salt,
+        "previous_orders": [],
+        "login_token": str(uuid.uuid4()) + "-" + str(int(time.time_ns())),
+        "token_expiration": (datetime.now() + timedelta(minutes=1440)).strftime("%Y-%m-%d %H:%M:%S")
+    }
+    dbconn.insert_doc("accounts", "users", account)
+    return jsonify({"username": account["username"], "token": account["login_token"]})
+
+@app.route("/api/accounts/login", methods=["POST"])
+def login_user():
+    username = request.json["username"]
+    password = request.json["password"]
+    if "@" in username:
+        account = dbconn.get_doc("accounts", "users", {"email": username})
+    else:
+        account = dbconn.get_doc("accounts", "users", {"username": username})
+    salt = account["salt"]
+    salted_password = salt + password.encode()
+    hash_obj = hashlib.sha256(salted_password)
+    hashed_password = hash_obj.hexdigest()
+
+    if account["password"] == hashed_password:
+        token = str(uuid.uuid4()) + "-" + str(int(time.time_ns()))
+        expiration = (datetime.now() + timedelta(minutes=1440)).strftime("%Y-%m-%d %H:%M:%S")
+        dbconn.update_one("accounts", "users", {"username": username}, {"$set": {"login_token": token, "token_expiration": expiration}})
+        return jsonify({"username": account["username"], "token": token})
+    else:
+        abort(401)
+
+@app.route("/api/accounts/complete-signup", methods=["POST"])
+def complete_signup():
+    token = request.json["token"]
+    username = request.json["username"]
+    password = request.json["password"]
+    account = dbconn.get_doc("accounts", "users", {"login_token": token})
+
+    salted_password = account["salt"] + password.encode()
+    hash_obj = hashlib.sha256(salted_password)
+    hashed_password = hash_obj.hexdigest()
+
+    if dbconn.get_doc("accounts", "users", {"username": username}):
+        abort(400)
+
+    if account:
+        if datetime.strptime(account["token_expiration"], "%Y-%m-%d %H:%M:%S") > datetime.now():
+            account["username"] = username
+            account["password"] = hashed_password
+            account["login_token"] = str(uuid.uuid4()) + "-" + str(int(time.time_ns()))
+            account["token_expiration"] = (datetime.now() + timedelta(minutes=1440)).strftime("%Y-%m-%d %H:%M:%S")
+            dbconn.update_one("accounts", "users", {"login_token": token}, {"$set": account})
+            return jsonify({"username": account["username"], "token": account["login_token"]})
+        else:
+            abort(401)
+    else:
+        abort(400)
+    
 @app.route("/api/products/total-count", methods=["GET"])
 def get_product_count():
     return jsonify(pm.get_product_count())
@@ -42,7 +194,7 @@ def get_amount_from_collection(collection: str, quantity: int):
 
 @app.route("/api/misc-data/available-colors", methods=["GET"])
 def get_available_colors():
-    colors = dbconn.get_doc("products", "misc_data", "000001")['colors']
+    colors = dbconn.get_doc("products", "misc_data", {"prod_id": "000001"})['colors']
     return jsonify(colors)
 
 @app.route("/api/products/get-user-recommended-item", methods=["GET"])

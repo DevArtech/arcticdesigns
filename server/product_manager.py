@@ -42,21 +42,21 @@ class ProductManager():
     def get_product(self, prod_id: str) -> Dict[str, any]:
         collections = self.get_all_collections()
         for collection in collections:
-            document = self.dbconn.find_one("products", collection, {"prod_id" : prod_id})
+            document = self.dbconn.get_doc("products", collection, {"prod_id" : prod_id})
             if document:
                 return document
             
     def locate_product_collection(self, prod_id: str) -> str:
         collections = self.get_all_collections()
         for collection in collections:
-            document = self.dbconn.find_one("products", collection, {"prod_id" : prod_id})
+            document = self.dbconn.get_doc("products", collection, {"prod_id" : prod_id})
             if document:
                 return collection
 
     def _check_if_exists(self, prod_id: str):
         collections = self.get_all_collections()
         for collection in collections:
-            document = self.dbconn.find_one("products", collection, {"prod_id" : prod_id})
+            document = self.dbconn.get_doc("products", collection, {"prod_id" : prod_id})
             if document:
                 return True
         return False

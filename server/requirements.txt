@@ -3,3 +3,4 @@ Pymongo
 python-dotenv
 aws-wsgi
 Flask-Cors
+authlib

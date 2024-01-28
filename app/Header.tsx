@@ -2,8 +2,13 @@
 import styles from './css/header.module.css';
 import React, { useEffect, useState } from 'react';
 import { url } from './config/utils';
+import { Link } from 'react-router-dom';
 
-function Header() {
+interface ProductPageProps {
+  userData: {name: string}
+}
+
+function Header(props: ProductPageProps) {
 
   const [searchBarPlaceholder, setSearchBarPlaceholder] = useState("");
   const [isMenuClosed, setIsMenuClosed] = useState(false);
@@ -90,6 +95,10 @@ function Header() {
     };
   }, []);
 
+  function signOut() {
+    localStorage.removeItem("user-data");
+    window.location.href = "/";
+  }
 
   return (
     <div className={styles["header"]}>
@@ -131,9 +140,18 @@ function Header() {
           </svg>
           <div id="cart"></div>
         </a>
-        <button className={styles["sign-in-button"]}>
-          Sign Up
-        </button>
+        {
+            props.userData == undefined ?
+            <nav>
+              <Link to="/sign-up">
+                <div className={styles["sign-in-button"]}>
+                  Sign Up
+                </div>
+              </Link>
+            </nav> : <button onClick={signOut}>
+              {props.userData.name}
+              </button>
+        }
       </div>
     </div>
   );

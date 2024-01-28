@@ -10,15 +10,22 @@ import './css/header.module.css'
 import CollectionsModal from './CollectionsModal';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductPage from './ProductPage';
+import SignUpPage from './SignUpPage';
+import GoogleSignUpFinalization from './GoogleSignUpFinalization';
 
 function Page() {
   const [isClient, setIsClient] = useState(false);
   const [productAddedData, setProductAddedData] = useState(undefined);
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState<{name: string, token: string}>();
 
   useEffect(() => {
     document.title = 'Arctic Designs';
     setIsClient(true);
+    const savedData = JSON.parse(localStorage.getItem('user-data') || 'null');
+    if (savedData != null) {
+      setUserData(savedData);
+    }
+    console.log(savedData)
   }, []);
 
   function popProductAdded(data) {
@@ -30,21 +37,31 @@ function Page() {
 
   return (
     <div className="App">
-      <Header />
       {isClient && (
         <Router>
           <Routes>
             <Route path="/" element={
               <>
+                <Header userData={userData}/>
                 <PrimaryModal popProductAdded={popProductAdded} />
                 <CollectionsModal popProductAdded={popProductAdded} />
               </>
             } />
             <Route path="/product/:productID" element={
               <>
+                <Header userData={userData}/>
                 <ProductPage userData={userData} popProductAdded={popProductAdded}/>
                 <CollectionsModal popProductAdded={popProductAdded} />
               </>
+            }/>
+             <Route path="/sign-up" element={
+              <>
+                <Header userData={userData}/>
+                <SignUpPage/>
+              </>
+            }/>
+            <Route path="/login" element={
+              <GoogleSignUpFinalization/>
             }/>
           </Routes>
         </Router>
