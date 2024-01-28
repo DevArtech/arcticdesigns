@@ -58,7 +58,7 @@ function SignUpPage() {
                         })
                     }}>
                         {
-                            userExists ? <p style={{color: "#DE3C4B", textAlign: "center"}}>It seems you already have an account, <br/> try to sign in instead!</p> : <></>
+                            userExists ? <p style={{color: "#DE3C4B", textAlign: "center"}}>It seems you already have an account, <br/> try to sign in instead!</p> : ""
                         }
                         {
                             invalidPassword ? <p style={{color: "#DE3C4B", textAlign: "center"}}>Passwords do not match!</p> : ""
@@ -120,7 +120,7 @@ function SignUpPage() {
                              onClick={() => { window.location.href = url('/login/google'); }}
                         />
                         <button className={styles["sign-up-button"]} type="submit" disabled={!signingIn}>Sign In</button>
-                        <button onClick={setSigningIn} className={styles["sign-in-button"]}>Don't have an account? Sign up!</button>
+                        <button onClick={setSigningIn} className={styles["sign-in-button"]}>Don&apos;t have an account? Sign up!</button>
                     </form>
                 </div>
                 }
