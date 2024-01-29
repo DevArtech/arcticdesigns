@@ -3,11 +3,6 @@ import styles from "./css/signuppage.module.css"
 import { useLocation } from 'react-router-dom';
 import { useState } from "react";
 
-interface RouteParams {
-    data: string;
-    [key: string]: string;
-}
-
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }

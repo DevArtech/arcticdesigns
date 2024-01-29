@@ -1,4 +1,3 @@
-import Carousel from 'react-multi-carousel';
 import { url } from './config/utils';
 import styles from './css/collectionsmodal.module.css';
 import { useState, useRef, useEffect } from 'react';

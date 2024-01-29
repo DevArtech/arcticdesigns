@@ -1,5 +1,5 @@
 import styles from './css/productcard.module.css';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ColorSelector from './ColorSelector';
 import AvailableColor from './utils/availablecolors';
 import { Link } from 'react-router-dom';
