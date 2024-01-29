@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     
     container: 
-      image: enkonix/lambda-python-311:latest
+      image: kamikazer/lambda-python-runtime
 
     steps:
     - uses: actions/checkout@v2
