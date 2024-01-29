@@ -43,7 +43,7 @@ function Page() {
           <Routes>
             <Route path="/" element={
               <>
-                <Header userData={userData}/>
+                {/* <Header userData={userData}/> */}
                 <PrimaryModal popProductAdded={popProductAdded} />
                 <CollectionsModal popProductAdded={popProductAdded} />
               </>
