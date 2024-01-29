@@ -1,4 +1,5 @@
 Flask
+cffi
 Pymongo
 python-dotenv
 aws-wsgi
