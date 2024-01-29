@@ -44,8 +44,8 @@ function Page() {
             <Route path="/" element={
               <>
                 <Header userData={userData}/>
-                {/* <PrimaryModal popProductAdded={popProductAdded} /> */}
-                <CollectionsModal popProductAdded={popProductAdded} />
+                <PrimaryModal popProductAdded={popProductAdded} />
+                {/* <CollectionsModal popProductAdded={popProductAdded} /> */}
               </>
             } />
             <Route path="/product/:productID" element={
