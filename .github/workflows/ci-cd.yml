@@ -17,7 +17,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.11'
+        python-version: '3.8'
     - name: Install dependencies
       run: |
         cd server
@@ -26,7 +26,7 @@ jobs:
         docker run --rm \
         --volume=$(pwd):/lambda-build \
         -w=/lambda-build \
-        lambci/lambda:build-python3.11 \
+        lambci/lambda:build-python3.8 \
         pip install -r requirements.txt --target .dependencies
         
     # Deployment
