@@ -9,6 +9,9 @@ on:
 jobs:
   build_deploy:
     runs-on: ubuntu-latest
+    
+    container: 
+      image: devartech/lambda-python3.11:latest
 
     steps:
     - uses: actions/checkout@v2
@@ -17,7 +20,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.8'
+        python-version: '3.11'
     - name: Install dependencies
       run: |
         cd server
@@ -26,7 +29,7 @@ jobs:
         docker run --rm \
         --volume=$(pwd):/lambda-build \
         -w=/lambda-build \
-        lambci/lambda:build-python3.8 \
+        lambci/lambda:build-python3.11 \
         pip install -r requirements.txt --target .dependencies
         
     # Deployment
