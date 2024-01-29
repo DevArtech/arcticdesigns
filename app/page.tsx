@@ -45,7 +45,7 @@ function Page() {
               <>
                 <Header userData={userData}/>
                 <PrimaryModal popProductAdded={popProductAdded} />
-                {/* <CollectionsModal popProductAdded={popProductAdded} /> */}
+                <CollectionsModal popProductAdded={popProductAdded} />
               </>
             } />
             <Route path="/product/:productID" element={
