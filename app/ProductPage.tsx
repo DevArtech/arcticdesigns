@@ -160,36 +160,29 @@ function ProductPage(props: ProductPageProps) {
             body: JSON.stringify(comment)
         };
         fetch(url(`/api/products/add-comment/${productID.toString()}`), headerObject)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setProductData(prevData => {
-                    return {
-                        ...prevData,
-                        comments: [
-                            <div key={prevData.comments.length} className={styles["comment"]}>
-                                <div style={{display: "flex", alignItems: "center", gap: "0.5rem"}}>
-                                    <p className={styles["comment-name"]}>{comment.name}</p>
-                                    <p className={styles["comment-date"]}>{formatDate(comment.date)}</p>
-                                </div>
-                                <p className={styles["comment-text"]}>{comment.text}</p>
-                            </div>,
-                            ...prevData.comments
-                        ]
-                    };
-                });
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-                setErrorAddingComment(true);
-                setTimeout(() => {
-                    setErrorAddingComment(false);
-                }, 3000);
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            setProductData(prevData => {
+                return {
+                    ...prevData,
+                    comments: [
+                        <div key={prevData.comments.length} className={styles["comment"]}>
+                            <div style={{display: "flex", alignItems: "center", gap: "0.5rem"}}>
+                                <p className={styles["comment-name"]}>{comment.name}</p>
+                                <p className={styles["comment-date"]}>{formatDate(comment.date)}</p>
+                            </div>
+                            <p className={styles["comment-text"]}>{comment.text}</p>
+                        </div>,
+                        ...prevData.comments
+                    ]
+                };
             });
+        })
     }; 
   
     return (

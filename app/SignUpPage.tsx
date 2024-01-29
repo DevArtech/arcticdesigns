@@ -47,7 +47,6 @@ function SignUpPage() {
                             } 
                             res.json().then(data => {
                                 if(res.status === 200) {
-                                    console.log(data);
                                     localStorage.setItem("user-data", JSON.stringify({name: data.username, token: data.token}));
                                     window.location.href = "/";
                                 }
@@ -101,7 +100,6 @@ function SignUpPage() {
                         }).then(res => {
                             res.json().then(data => {
                                 if(res.status === 200) {
-                                    console.log(data);
                                     localStorage.setItem("user-data", JSON.stringify({name: data.username, token: data.token}));
                                     window.location.href = "/";
                                 }

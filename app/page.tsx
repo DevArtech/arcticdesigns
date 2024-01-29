@@ -24,8 +24,9 @@ function Page() {
     const savedData = JSON.parse(localStorage.getItem('user-data') || 'null');
     if (savedData != null) {
       setUserData(savedData);
+    } else {
+      setUserData(undefined);
     }
-    console.log(savedData)
   }, []);
 
   function popProductAdded(data) {
