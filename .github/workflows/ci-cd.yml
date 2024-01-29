@@ -20,12 +20,10 @@ jobs:
         python-version: '3.8'
     - name: Install dependencies
       run: |
+        sudo apt-get install libffi-dev
         cd server
         mkdir -p .dependencies
         python -m pip install --upgrade pip
-        sudo apt-get install libffi-dev
-        pip install --upgrade pip setuptools wheel
-        pip install --force-reinstall cffi
         docker run --rm \
         --volume=$(pwd):/lambda-build \
         -w=/lambda-build \
