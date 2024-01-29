@@ -1,5 +1,6 @@
-Flask
+cryptography
 cffi
+Flask
 Pymongo
 python-dotenv
 aws-wsgi
