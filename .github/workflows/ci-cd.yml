@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     
     container: 
-      image: kamikazer/lambda-python-runtime
+      image: amazon/aws-lambda-python
 
     steps:
     - uses: actions/checkout@v2
