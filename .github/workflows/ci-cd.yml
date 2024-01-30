@@ -9,9 +9,6 @@ on:
 jobs:
   build_deploy:
     runs-on: ubuntu-latest
-    
-    container: 
-      image: amazon/aws-lambda-python
 
     steps:
     - uses: actions/checkout@v2
@@ -29,7 +26,7 @@ jobs:
         docker run --rm \
         --volume=$(pwd):/lambda-build \
         -w=/lambda-build \
-        lambci/lambda:build-python3.11 \
+        devartech/lambda-python3.11 \
         pip install -r requirements.txt --target .dependencies
         
     # Deployment
