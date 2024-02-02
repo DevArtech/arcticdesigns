@@ -39,6 +39,7 @@ def login():
 @app.route('/authorize')
 def authorize():
     code = request.args.get('code', None)
+    return code
     if code:
         token = google.authorize_access_token()
         url = "https://people.googleapis.com/v1/people/me?personFields=emailAddresses"
