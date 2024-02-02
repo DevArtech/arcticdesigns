@@ -34,12 +34,11 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 @app.route('/login/google')
 def login():
-    return google.authorize_redirect(redirect_uri=url_for('authorize', _external=True))
+    return google.authorize_redirect(redirect_uri=url_for('dev/authorize', _external=True))
 
 @app.route('/authorize')
 def authorize():
     code = request.args.get('code', None)
-    return code
     if code:
         token = google.authorize_access_token()
         url = "https://people.googleapis.com/v1/people/me?personFields=emailAddresses"
