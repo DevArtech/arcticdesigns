@@ -26,8 +26,9 @@ jobs:
         docker run --rm \
         --volume=$(pwd):/lambda-build \
         -w=/lambda-build \
+        --entrypoint /bin/sh \
         public.ecr.aws/lambda/python:3.11 \
-        /bin/sh -c "pip install -r requirements.txt --target .dependencies"
+        -c "pip install -r requirements.txt --target .dependencies"
         
     # Deployment
     - name: Set up AWS CLI
