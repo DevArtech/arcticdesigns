@@ -37,32 +37,34 @@ app.secret_key = os.getenv('SECRET_KEY')
 def login():
     return google.authorize_redirect(redirect_uri=url_for('v1/authorize', _external=True))
 
+@app.route('/v1/authorize', endpoint='v1/authorize', defaults={'query': None})
 @app.route('/v1/authorize/<query>', endpoint='v1/authorize')
 def authorize(query: str):
-    match = re.search(r"&code=([^&]+)&scope=", query)
-    code = match.group(1) if match else None
-    if code:
-        token = google.authorize_access_token()
-        url = "https://people.googleapis.com/v1/people/me?personFields=emailAddresses"
+    if query:
+        match = re.search(r"&code=([^&]+)&scope=", query)
+        code = match.group(1) if match else None
+        if code:
+            token = google.authorize_access_token()
+            url = "https://people.googleapis.com/v1/people/me?personFields=emailAddresses"
 
-        # Set up the headers with the access token
-        headers = {
-            "Authorization": f"Bearer {token['access_token']}",
-            "Accept": "application/json"
-        }
+            # Set up the headers with the access token
+            headers = {
+                "Authorization": f"Bearer {token['access_token']}",
+                "Accept": "application/json"
+            }
 
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            email_addresses = response.json().get("emailAddresses", [])
-            if email_addresses:
-                return redirect(f"{os.getenv('MAIN_URI')}/#/login?{google_login_user(email_addresses[0]['value'])}")
+            response = requests.get(url, headers=headers)
+            if response.status_code == 200:
+                email_addresses = response.json().get("emailAddresses", [])
+                if email_addresses:
+                    return redirect(f"{os.getenv('MAIN_URI')}/#/login?{google_login_user(email_addresses[0]['value'])}")
+                else:
+                    return "No email address found"
             else:
-                return "No email address found"
-        else:
-            return f"Error: {response.status_code}"
+                return f"Error: {response.status_code}"
 
-    else:
-        abort(400)
+        else:
+            abort(400)
 
 def google_login_user(email: str):
     account = dbconn.get_doc("accounts", "users", {"email": email})
