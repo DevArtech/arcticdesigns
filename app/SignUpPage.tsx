@@ -83,7 +83,7 @@ function SignUpPage() {
                         </div>
                         <label htmlFor="confirm-password">Confirm Password</label>
                         <input type={showPassword ? "text" : "password"} name="confirm-password" id="confirm-password" placeholder="Confirm Password" required/>
-                        <p style={{color: "#F7F4F3"}}>or</p>
+                        <p style={{color: "#F7F4F3", paddingTop: "1rem"}}>or</p>
                         {/* <GoogleButton
                             onClick={() => { window.location.href = url('/login/google'); }}
                         /> */}
