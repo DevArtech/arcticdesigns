@@ -128,7 +128,7 @@ function SignUpPage() {
                                 showPassword ? <FontAwesomeIcon icon={faEyeSlash} onClick={() => setShowPassword(!showPassword)}/> : <FontAwesomeIcon icon={faEye} onClick={() => setShowPassword(!showPassword)}/>
                             }
                         </div>
-                        <p style={{color: "#F7F4F3"}}>or</p>
+                        <p style={{color: "#F7F4F3", paddingTop: "1rem"}}>or</p>
                         {/* <GoogleButton
                              onClick={() => { window.location.href = url('/login/google'); }}
                         /> */}

@@ -115,6 +115,9 @@ function ProductPage(props: ProductPageProps) {
                             <p className={styles["comment-text"]}>{comment.text}</p>
                         </div>
                     )})
+                if (productData.comments == undefined) {
+                    productData.comments = [];
+                }
             productData.images = images;
             productData.tags = tags;
             productData.comments = comments;
