@@ -34,7 +34,7 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 @app.route('/login/google')
 def login():
-    return google.authorize_redirect(redirect_uri=url_for('/v1/authorize', _external=True))
+    return google.authorize_redirect(redirect_uri=url_for('authorize', _external=True))
 
 @app.route('/authorize')
 def authorize():
