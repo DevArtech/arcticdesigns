@@ -2,12 +2,16 @@ import { useState } from "react";
 import { url } from "./config/utils"
 import styles from "./css/signuppage.module.css"
 import GoogleButton from 'react-google-button'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
 function SignUpPage() {
     const [userExists, setUserExists] = useState(false);
     const [invalidPassword, setInvalidPassword] = useState(false);
     const [usernameTaken, setUsernameTaken] = useState(false);
     const [signingIn, isSigningIn] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     function setSigningIn() {
         isSigningIn(!signingIn);
@@ -15,6 +19,7 @@ function SignUpPage() {
     
     return (
         <div className={styles["page-center"]}>
+            <script src="https://kit.fontawesome.com/109833def2.js" crossOrigin="anonymous"></script>
             <div style={{width: "80vw", height: "90vh", zIndex: "10", display: "flex", alignItems: "center"}}>
                 { !signingIn ?
                 <div className={styles["sign-up-page"]}>
@@ -70,9 +75,14 @@ function SignUpPage() {
                         <label htmlFor="email">Email</label>
                         <input type="email" name="email" id="email" placeholder="Email" required/>
                         <label htmlFor="password">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Password" required/>
+                        <div className={styles["password-field"]}>
+                            <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="Password" required/>
+                            {
+                                showPassword ? <FontAwesomeIcon icon={faEyeSlash} onClick={() => setShowPassword(!showPassword)}/> : <FontAwesomeIcon icon={faEye} onClick={() => setShowPassword(!showPassword)}/>
+                            }
+                        </div>
                         <label htmlFor="confirm-password">Confirm Password</label>
-                        <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" required/>
+                        <input type={showPassword ? "text" : "password"} name="confirm-password" id="confirm-password" placeholder="Confirm Password" required/>
                         <p style={{color: "#F7F4F3"}}>or</p>
                         {/* <GoogleButton
                             onClick={() => { window.location.href = url('/login/google'); }}
@@ -112,7 +122,12 @@ function SignUpPage() {
                         <label htmlFor="username">Username or Email</label>
                         <input type="text" name="username" id="username" placeholder="Username or Email" required/>
                         <label htmlFor="password">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Password" required/>
+                        <div className={styles["password-field"]}>
+                            <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="Password" required/>
+                            {
+                                showPassword ? <FontAwesomeIcon icon={faEyeSlash} onClick={() => setShowPassword(!showPassword)}/> : <FontAwesomeIcon icon={faEye} onClick={() => setShowPassword(!showPassword)}/>
+                            }
+                        </div>
                         <p style={{color: "#F7F4F3"}}>or</p>
                         {/* <GoogleButton
                              onClick={() => { window.location.href = url('/login/google'); }}
