@@ -37,9 +37,10 @@ app.secret_key = os.getenv('SECRET_KEY')
 def login():
     return google.authorize_redirect(redirect_uri=url_for('v1/authorize', _external=True))
 
-@app.route('/v1/authorize/', endpoint='v1/authorize')
-@app.route('/v1/authorize/<path:query>', endpoint='v1/authorize')
-def authorize(query: str = None):
+@app.route('/v1/authorize')
+@app.route('/v1/authorize', endpoint='v1/authorize', defaults={'query': None})
+@app.route('/v1/authorize/<query>', endpoint='v1/authorize')
+def authorize(query: str):
     if query:
         match = re.search(r"&code=([^&]+)&scope=", query)
         code = match.group(1) if match else None
