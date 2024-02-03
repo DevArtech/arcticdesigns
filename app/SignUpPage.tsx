@@ -74,9 +74,9 @@ function SignUpPage() {
                         <label htmlFor="confirm-password">Confirm Password</label>
                         <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" required/>
                         <p style={{color: "#F7F4F3"}}>or</p>
-                        <GoogleButton
+                        {/* <GoogleButton
                             onClick={() => { window.location.href = url('/login/google'); }}
-                        />
+                        /> */}
                         <button className={styles["sign-up-button"]} type="submit" disabled={signingIn}>Sign Up</button>
                         <button onClick={setSigningIn} className={styles["sign-in-button"]}>Already have an account? Sign in here!</button>
                     </form>
@@ -114,9 +114,9 @@ function SignUpPage() {
                         <label htmlFor="password">Password</label>
                         <input type="password" name="password" id="password" placeholder="Password" required/>
                         <p style={{color: "#F7F4F3"}}>or</p>
-                        <GoogleButton
+                        {/* <GoogleButton
                              onClick={() => { window.location.href = url('/login/google'); }}
-                        />
+                        /> */}
                         <button className={styles["sign-up-button"]} type="submit" disabled={!signingIn}>Sign In</button>
                         <button onClick={setSigningIn} className={styles["sign-in-button"]}>Don&apos;t have an account? Sign up!</button>
                     </form>
