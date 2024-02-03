@@ -11,6 +11,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from product_manager import ProductManager
+from urllib.parse import urlparse, parse_qs
 from authlib.integrations.flask_client import OAuth
 from flask import Flask, jsonify, request, url_for, redirect, abort
 load_dotenv()
@@ -36,9 +37,11 @@ app.secret_key = os.getenv('SECRET_KEY')
 def login():
     return google.authorize_redirect(redirect_uri=url_for('v1/authorize', _external=True))
 
-@app.route('/v1/authorize', endpoint='v1/authorize')
+@app.route('/v1/authorize/', endpoint='v1/authorize')
 def authorize():
-    code = request.args.get('code', None)
+    parsed_url = urlparse(request.url)
+    query_params = parse_qs(parsed_url.query)
+    code = query_params.get("code", None)[0]
     if code:
         token = google.authorize_access_token()
         url = "https://people.googleapis.com/v1/people/me?personFields=emailAddresses"
