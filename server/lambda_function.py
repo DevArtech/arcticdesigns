@@ -67,6 +67,13 @@ def authorize(query: str):
         else:
             abort(400)
 
+def check_user_token(token: str):
+    account = dbconn.get_doc("accounts", "users", {"login_token": token})
+    if account:
+        if datetime.strptime(account["token_expiration"], "%Y-%m-%d %H:%M:%S") > datetime.now():
+            return True
+    return False
+
 def google_login_user(email: str):
     account = dbconn.get_doc("accounts", "users", {"email": email})
     need_additional_info = False
@@ -221,8 +228,11 @@ def get_products_not(collection: str, quantity: int):
 
 @app.route("/api/products/add-comment/<prod_id>", methods=["POST"])
 def add_comment(prod_id: str):
-    collection = pm.locate_product_collection(prod_id)
     comment = request.json
+    if not check_user_token(comment["token"]):
+        abort(401)
+    del comment["token"]
+    collection = pm.locate_product_collection(prod_id)
     prior_comments = pm.get_product(prod_id)["comments"]
     if prior_comments is None:
         prior_comments = []

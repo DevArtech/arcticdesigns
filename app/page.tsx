@@ -18,6 +18,11 @@ function Page() {
   const [productAddedData, setProductAddedData] = useState(undefined);
   const [userData, setUserData] = useState<{name: string, token: string}>();
 
+  function signOutUser() {
+    localStorage.removeItem('user-data');
+    setUserData(undefined);
+  }
+
   useEffect(() => {
     document.title = 'Arctic Designs';
     setIsClient(true);
@@ -51,7 +56,7 @@ function Page() {
             <Route path="/product/:productID" element={
               <>
                 <Header userData={userData}/>
-                <ProductPage userData={userData} popProductAdded={popProductAdded}/>
+                <ProductPage userData={userData} popProductAdded={popProductAdded} signOutUser={signOutUser}/>
                 <CollectionsModal popProductAdded={popProductAdded} />
               </>
             }/>

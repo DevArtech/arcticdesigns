@@ -13,8 +13,9 @@ interface RouteParams {
 }
 
 interface ProductPageProps {
+    userData: {name: string, token: string};
     popProductAdded(data: {name: string, image: string, color: string}): void;
-    userData: {name: string}
+    signOutUser(): void;
 }
 
 function ProductPage(props: ProductPageProps) {
@@ -151,6 +152,7 @@ function ProductPage(props: ProductPageProps) {
             return;
         }
         const comment = {
+            token: props.userData.token,
             name: props.userData.name,
             text: inputValue,
             date: new Date().toISOString()
@@ -164,13 +166,21 @@ function ProductPage(props: ProductPageProps) {
         };
         fetch(url(`/api/products/add-comment/${productID.toString()}`), headerObject)
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            if(response.status === 401) {
+                props.signOutUser();
+                window.location.href = "/#/sign-up";
+                return;
+            } else if(response.status !== 200) {
+                setErrorAddingComment(true);
+                return;
             }
             return response.json();
         })
         .then(data => {
             setProductData(prevData => {
+                if (prevData.comments[0] == undefined) {
+                    prevData.comments = [];
+                }
                 return {
                     ...prevData,
                     comments: [
