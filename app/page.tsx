@@ -55,7 +55,6 @@ function Page() {
         return;
       } else if(response.status == 200) {
         const result = await response.json();
-        console.log(result);
         if(result) {
           setProductAddedData(data);
           setHasCartItem(true);
