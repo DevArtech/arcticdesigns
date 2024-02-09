@@ -238,6 +238,10 @@
     background-color: #48B8FE;
 }
 
+.comment-input-field:not(:disabled):focus-within {
+    background-color: transparent;
+}
+
 .comment-input-field::placeholder {
     color: #102542;
 }

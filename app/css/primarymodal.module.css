@@ -72,12 +72,12 @@
     border-radius: 2rem;
     width: 100%;
     z-index: 1;
+    transition: all 0.1s ease-in-out;
 }
 
 .search-bar:hover {
     cursor: text;
     background-color: #48B8FE;
-    transition: all 0.1s ease-in-out;
 }
 
 .search-bar:hover > .search-icon {
@@ -93,6 +93,22 @@
 .search-bar:hover > .search-input-field::placeholder {
     color: #102542;
     transition: all 0.1s ease-in-out;
+}
+
+.search-bar:focus-within {
+    background-color: #F7F4F3;
+}
+
+.search-bar:focus-within > .search-icon {
+    fill: #48B8FE;
+}
+
+.search-bar:focus-within > span {
+    background-color: #ACB1BB;
+}
+
+.search-bar:focus-within > .search-input-field::placeholder {
+    color: #ACB1BB;
 }
 
 .search-icon {
