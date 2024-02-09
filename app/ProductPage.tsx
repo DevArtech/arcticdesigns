@@ -14,7 +14,7 @@ interface RouteParams {
 
 interface ProductPageProps {
     userData: {name: string, token: string};
-    popProductAdded(data: {name: string, image: string, color: string}): void;
+    popProductAdded(data: {id: string, name: string, image: string, color: string}): void;
     signOutUser(): void;
 }
 
@@ -226,7 +226,7 @@ function ProductPage(props: ProductPageProps) {
                                 selectedColor={selectedColor}
                                 setSelectedColor={setSelectedColor}
                             />
-                            <button onClick={() => props.popProductAdded({ name: productData.name, image: productData.images[0], color: selectedColor })} className={styles["add-to-cart"]}>
+                            <button onClick={() => props.popProductAdded({ id: productData.prod_id, name: productData.name, image: productData.images[0], color: selectedColor })} className={styles["add-to-cart"]}>
                                 <svg className={styles["add-to-cart-icon"]} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xmlSpace="preserve">
                                     <defs/>
                                     <g transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">

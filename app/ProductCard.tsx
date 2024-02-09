@@ -14,7 +14,7 @@ interface ProductCardProps {
     availableColors: AvailableColor[];
     redirect: string;
     largeCard: boolean;
-    popProductAdded(data: {name: string, image: string, color: string}): void;
+    popProductAdded(data: {id: string, name: string, image: string, color: string}): void;
 };
 
 
@@ -60,7 +60,7 @@ function ProductCard(props: ProductCardProps) {
                 isLargeCard={props.largeCard}
                 selectedColor={selectedColor}
                 setSelectedColor={setSelectedColor}/>
-            <button onClick={() => props.popProductAdded({ name: props.name, image: props.image, color: selectedColor })} className={styles["add-to-cart-button"]}>
+            <button onClick={() => props.popProductAdded({ id: props.id, name: props.name, image: props.image, color: selectedColor })} className={styles["add-to-cart-button"]}>
                 <svg className={styles["add-to-cart-icon"]} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xmlSpace="preserve">
                     <defs/>
                     <g transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">

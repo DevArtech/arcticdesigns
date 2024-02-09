@@ -25,7 +25,7 @@ interface ProductCardProps {
 };
 
 interface CollectionsModalProps {
-    popProductAdded(data: {name: string, image: string, color: string}): void;
+    popProductAdded(data: {id: string, name: string, image: string, color: string}): void;
 }
 
 function CollectionsModal(props: CollectionsModalProps) {

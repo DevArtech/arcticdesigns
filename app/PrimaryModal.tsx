@@ -8,7 +8,7 @@ import 'react-multi-carousel/lib/styles.css';
 import LoadingSpinner from './LoadingSpinner';
 
 interface PrimaryModalProps {
-    popProductAdded(data: {name: string, image: string, color: string}): void;
+    popProductAdded(data: {id: string, name: string, image: string, color: string}): void;
 }
 
 function PrimaryModal(props: PrimaryModalProps) {

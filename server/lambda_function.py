@@ -37,8 +37,6 @@ app.secret_key = os.getenv('SECRET_KEY')
 def login():
     return google.authorize_redirect(redirect_uri=url_for('v1/authorize', _external=True))
 
-@app.route('/v1/authorize', endpoint='/v1/authorize')
-@app.route('/v1/authorize', endpoint='v1/authorize', defaults={'query': None})
 @app.route('/v1/authorize/<query>', endpoint='v1/authorize')
 def authorize(query: str):
     if query:
@@ -85,6 +83,7 @@ def google_login_user(email: str):
             "password": "",
             "salt": os.urandom(16),
             "previous_orders": [],
+            "cart": [],
             "login_token": "",
             "token_expiration": ""
         }
@@ -122,6 +121,7 @@ def signup_user():
         "password": hashed_password,
         "salt": salt,
         "previous_orders": [],
+        "cart": [],
         "login_token": str(uuid.uuid4()) + "-" + str(int(time.time_ns())),
         "token_expiration": (datetime.now() + timedelta(minutes=1440)).strftime("%Y-%m-%d %H:%M:%S")
     }
@@ -253,6 +253,17 @@ def get_product(product_id: str):
 @app.route("/api/products/get-product-collection/<product_id>", methods=["GET"])
 def get_product_collection(product_id: str):
     return jsonify(pm.locate_product_collection(product_id))
+
+@app.route("/api/accounts/add-to-cart", methods=["POST"])
+def add_to_cart():
+    token = request.json["token"]
+    product_id = request.json["product_id"]
+    if not check_user_token(token):
+        abort(401)
+    account = dbconn.get_doc("accounts", "users", {"login_token": token})
+    account["cart"].append(product_id)
+    result = dbconn.update_one("accounts", "users", {"login_token": token}, {"$set": {"cart": account["cart"]}})
+    return jsonify({"success": result.acknowledged})
 
 def lambda_handler(event, context):
     return awsgi.response(app, event, context)

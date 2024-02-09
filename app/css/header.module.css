@@ -158,6 +158,15 @@
     fill: #48B8FE;
 }
 
+.username {
+    font-size: 16px;
+    color: #102542;
+    width: 8rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .hamburger-menu {
     display: none; /* Hidden by default */
     cursor: pointer;

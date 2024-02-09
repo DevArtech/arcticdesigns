@@ -5,7 +5,8 @@ import { url } from './config/utils';
 import { Link } from 'react-router-dom';
 
 interface ProductPageProps {
-  userData: {name: string}
+  userData: {name: string};
+  hasCartItem: boolean;
 }
 
 function Header(props: ProductPageProps) {
@@ -136,7 +137,9 @@ function Header(props: ProductPageProps) {
         <a href="/cart" className={styles["cart"]}>
           <svg width="2rem" height="2rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path className={styles["cart-icon"]} d="M 9.464 19.695 C 9.464 20.525 8.794 21.195 7.964 21.195 C 7.134 21.195 6.464 20.525 6.464 19.695 C 6.464 18.865 7.134 18.195 7.964 18.195 C 8.794 18.195 9.464 18.865 9.464 19.695 Z M 18.009 18.195 C 17.179 18.195 16.509 18.865 16.509 19.695 C 16.509 20.525 17.179 21.195 18.009 21.195 C 18.839 21.195 19.509 20.525 19.509 19.695 C 19.509 18.865 18.839 18.195 18.009 18.195 Z M 20.73 7.68 L 18.73 15.68 C 18.65 16.01 18.35 16.25 18 16.25 L 8 16.25 C 7.64 16.25 7.33 15.99 7.26 15.63 L 5.37 5.25 L 3.002 5.25 C 2.592 5.25 2.252 4.91 2.252 4.5 C 2.252 4.09 2.592 3.75 3.002 3.75 L 6 3.75 C 6.36 3.75 6.67 4.01 6.74 4.37 L 7.17 6.75 L 20 6.75 C 20.23 6.75 20.45 6.86 20.59 7.04 C 20.73 7.22 20.78 7.46 20.73 7.68 Z M 19.04 8.25 L 7.44 8.25 L 8.62 14.75 L 17.41 14.75 L 19.04 8.25 Z"/>
-            <circle id="notification" cx="20.5" cy="6" r="3" className={styles["cart-notification"]}/>
+            {
+              props.hasCartItem ? <circle id="notification" cx="20.5" cy="6" r="3" className={styles["cart-notification"]}/> : ""
+            }
           </svg>
           <div id="cart"></div>
         </a>
@@ -148,8 +151,8 @@ function Header(props: ProductPageProps) {
                   Sign Up
                 </div>
               </Link>
-            </nav> : <button onClick={signOut}>
-              {props.userData.name}
+            </nav> : <button className={styles["username"]} onClick={signOut}>
+              Hello {props.userData.name}!
               </button>
         }
       </div>
