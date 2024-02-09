@@ -19,7 +19,6 @@ function SignUpPage() {
     
     return (
         <div className={styles["page-center"]}>
-            <script src="https://kit.fontawesome.com/109833def2.js" crossOrigin="anonymous"></script>
             <div style={{width: "80vw", height: "90vh", zIndex: "10", display: "flex", alignItems: "center"}}>
                 { !signingIn ?
                 <div className={styles["sign-up-page"]}>
