@@ -265,6 +265,28 @@ def add_to_cart():
     result = dbconn.update_one("accounts", "users", {"login_token": token}, {"$set": {"cart": account["cart"]}})
     return jsonify({"success": result.acknowledged})
 
+@app.route("/api/products/search", methods=["POST"])
+def search():
+    query = request.json["query"]
+    products = []
+    collections = [collection for collection in dbconn.get_all_collections("products") if collection != "misc_data"]
+    for collection in collections:
+        cursor = dbconn.get_all_docs("products", collection)
+        for product in cursor:
+            product_added = False
+            if query.lower() in product["name"].lower():
+                products.append({key: product[key] for key in product if key != "_id"})
+                product_added = True
+
+            if query.lower() in product["description"].lower() and not product_added:
+                products.append({key: product[key] for key in product if key != "_id"})
+                product_added = True
+
+            if query.lower() in product["tags"] and not product_added:
+                products.append({key: product[key] for key in product if key != "_id"})
+                product_added = True
+    return jsonify(products)
+
 def lambda_handler(event, context):
     return awsgi.response(app, event, context)
 

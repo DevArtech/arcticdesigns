@@ -3,6 +3,7 @@ import styles from './css/loadingspinner.module.css';
 interface LoadingSpinnerProps {
     color: string;
     solid?: boolean;
+    noBottomPadding?: boolean;
 }
 
 function LoadingSpinner(props: LoadingSpinnerProps) {
@@ -10,7 +11,8 @@ function LoadingSpinner(props: LoadingSpinnerProps) {
         <div style={{
             border: `1px solid ${props.color}`, 
             background: props.solid ? props.color : "",
-            color: props.color
+            color: props.color,
+            marginBottom: !props.noBottomPadding ? "1rem" : "0"
         }} className={styles["loader"]}/>
     );
 }

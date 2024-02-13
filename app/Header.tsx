@@ -118,7 +118,7 @@ function Header(props: ProductPageProps) {
       {/* Right side menu */}
       <div className={`${styles["right-header"]} ${isMenuClosed ? styles["hide-menu"] : ''}`}>
         <div className={styles["header-options"]}>
-          <a className={styles["header-link"]} href="/products">Products</a>
+          <a className={styles["header-link"]} href="/#/products">Products</a>
           <a className={styles["header-link"]} href="/blog">Blog</a>
           <a className={styles["header-link"]} href="/contact">Contact</a>
         </div>

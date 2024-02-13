@@ -1,18 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import Header from './Header';
-import PrimaryModal from './PrimaryModal';
-import ProductAddedModal from './ProductAddedModal';
 import './css/fira-sans.css'
 import './css/globals.css'
 import './css/header.module.css'
-import CollectionsModal from './CollectionsModal';
+import React, { useEffect, useState } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import ProductPage from './ProductPage';
-import SignUpPage from './SignUpPage';
-import GoogleSignUpFinalization from './GoogleSignUpFinalization';
+import Header from './Header';
 import { url } from './config/utils';
+import SignUpPage from './SignUpPage';
+import ProductPage from './ProductPage';
+import PrimaryModal from './PrimaryModal';
+import ProductSearch from "./ProductSearch";
+import CollectionsModal from './CollectionsModal';
+import ProductAddedModal from './ProductAddedModal';
+import GoogleSignUpFinalization from './GoogleSignUpFinalization';
 
 function Page() {
   const [isClient, setIsClient] = useState(false);
@@ -94,6 +95,12 @@ function Page() {
             }/>
             <Route path="/login" element={
               <GoogleSignUpFinalization/>
+            }/>
+            <Route path="/products" element={
+              <>
+                <Header userData={userData} hasCartItem={hasCartItem}/>
+                <ProductSearch popProductAdded={popProductAdded} />
+              </>
             }/>
           </Routes>
         </Router>

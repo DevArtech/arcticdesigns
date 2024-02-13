@@ -1,0 +1,103 @@
+.product-search {
+    padding: 6rem 2rem 1rem 2rem;
+}
+
+.search-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.search-results {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #102542;
+    padding: 1rem;
+    border-radius: 3rem;
+    flex-wrap: wrap;
+}
+
+.search-icon {
+    position: absolute;
+    left: 2.75rem;
+    fill: #102542;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 0.5rem 1rem 0.5rem 2.75rem;
+    border: 1px solid #102542;
+    border-radius: 3rem;
+    outline: none;
+    transition: all 0.1s ease;
+}
+
+.search-enter {
+    background-color: #48B8FE;
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 3rem;
+    color: #F7F4F3;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.search-enter:hover {
+    background-color: #102542;
+}
+
+.search-bar:hover {
+    background-color: #48B8FE;
+}
+
+.search-bar:hover::placeholder {
+    color: #102542;
+}
+
+.search-bar:focus {
+    background-color: #F7F4F3;
+}
+
+.search-results > div {
+    width: calc(100% / 6.225);
+}
+
+.search-results > div > nav > a > p {
+    color: #102542;
+    text-shadow: none;
+}
+
+.search-results > div > nav > a > div > p {
+    color: #102542;
+    text-shadow: none;
+}
+
+.search-results > div > div > div > button {
+    color: #102542;
+    box-shadow: none;
+    border: 1px solid #102542;
+}
+
+.search-results > div > div > div > ul > li {
+    background-color: #10254280;
+}
+
+.search-results > div > div > button {
+    filter: none;
+}
+
+.search-results > div > div > button > svg > g > path {
+    fill: #102542;
+}
+
+.search-results > div > div > button > svg > g > circle {
+    fill: #102542;
+}
